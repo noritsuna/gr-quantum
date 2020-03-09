@@ -1,0 +1,266 @@
+options:
+  parameters:
+    author: Noritsuna Imamura(noritsuna@siprop.org)
+    category: '[GRC Hier Blocks]'
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: ''
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: qt_gui
+    hier_block_src_path: '.:'
+    id: one_qubit_simultor_simple
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: Simple 1Qubit Simultor
+    window_size: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 8]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: samp_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: '32000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 160]
+    rotation: 0
+    state: enabled
+- name: blocks_message_debug_0
+  id: blocks_message_debug
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1901, 75]
+    rotation: 0
+    state: true
+- name: quantum_controllers_Analyzer_0
+  id: quantum_controllers_Analyzer
+  parameters:
+    affinity: ''
+    alias: ''
+    amp_threshold_rate: '50.0'
+    bw_threshold_rate: '10.0'
+    comment: ''
+    freq_threshold_rate: '10.0'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    proc_time_threshold_rate: '10.0'
+    qubit_num: '1'
+    samples_per_second: samp_rate
+    scale_rate: '1000000000.0'
+    showSyncPort: 'False'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [918, 287]
+    rotation: 0
+    state: true
+- name: quantum_controllers_Coprocessor_0
+  id: quantum_controllers_Coprocessor
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    qubit_id: '0'
+    samples_per_second: samp_rate
+    scale_rate: '1000000000.0'
+    showSyncPort: 'True'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [691, 288]
+    rotation: 0
+    state: enabled
+- name: quantum_controllers_Generator_0
+  id: quantum_controllers_Generator
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    qubit_num: '1'
+    samples_per_second: samp_rate
+    scale_rate: '1000000000.0'
+    showSyncPort: 'False'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1475, 335]
+    rotation: 0
+    state: enabled
+- name: quantum_controllers_Initializer_0
+  id: quantum_controllers_Initializer
+  parameters:
+    I_amp: '0.1'
+    I_bw: '10'
+    Q_amp: '0.01'
+    Q_bw: '20'
+    affinity: ''
+    alias: ''
+    comment: ''
+    freq: '1000'
+    isFeedbackMode: 'False'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    proc_time: '3'
+    qubit_id: '1'
+    samples_per_second: samp_rate
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [24, 260]
+    rotation: 0
+    state: enabled
+- name: quantum_controllers_QuTiP_Simulator_0
+  id: quantum_controllers_QuTiP_Simulator
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    qubit_noise_rate: '0.0'
+    qubit_num: '1'
+    scale_rate: '1000000000.0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1242, 324]
+    rotation: 0
+    state: enabled
+- name: quantum_controllers_readout_0
+  id: quantum_controllers_readout
+  parameters:
+    I_amp: '0.008'
+    I_bw: '50'
+    Q_amp: '1.0'
+    Q_bw: '80'
+    affinity: ''
+    alias: ''
+    comment: ''
+    freq: '1500'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    proc_time: '4'
+    samples_per_second: samp_rate
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [447, 268]
+    rotation: 0
+    state: enabled
+- name: quantum_gates_X_0
+  id: quantum_gates_X
+  parameters:
+    I_amp: '0.04'
+    I_bw: '30'
+    Q_amp: '0.6'
+    Q_bw: '50'
+    affinity: ''
+    alias: ''
+    comment: ''
+    freq: '1200'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    proc_time: '5'
+    samples_per_second: samp_rate
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [232, 268]
+    rotation: 0
+    state: enabled
+- name: quantum_measurements_Detector_0
+  id: quantum_measurements_Detector
+  parameters:
+    affinity: ''
+    alias: ''
+    amp_threshold_rate: '10.0'
+    bw_threshold_rate: '10.0'
+    comment: ''
+    freq_threshold_rate: '10.0'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    proc_time_threshold_rate: '10.0'
+    qubit_num: '1'
+    qubit_pole: 'True'
+    samples_per_second: samp_rate
+    scale_rate: '1000000000.0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1696, 306]
+    rotation: 0
+    state: enabled
+- name: quantum_viewer_QuTiP_Bloch_0
+  id: quantum_viewer_QuTiP_Bloch
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    qubit_id: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2022, 351]
+    rotation: 0
+    state: enabled
+
+connections:
+- [quantum_controllers_Analyzer_0, analyzed_data, blocks_message_debug_0, print]
+- [quantum_controllers_Analyzer_0, analyzed_data, quantum_controllers_QuTiP_Simulator_0,
+  analyzed_data]
+- [quantum_controllers_Analyzer_0, out, blocks_message_debug_0, print]
+- [quantum_controllers_Analyzer_0, out, quantum_controllers_QuTiP_Simulator_0, in]
+- [quantum_controllers_Coprocessor_0, '0', quantum_controllers_Analyzer_0, '0']
+- [quantum_controllers_Coprocessor_0, '1', quantum_controllers_Analyzer_0, '1']
+- [quantum_controllers_Coprocessor_0, '2', quantum_controllers_Analyzer_0, '2']
+- [quantum_controllers_Coprocessor_0, out, quantum_controllers_Analyzer_0, in]
+- [quantum_controllers_Generator_0, '0', quantum_measurements_Detector_0, '0']
+- [quantum_controllers_Generator_0, out, quantum_measurements_Detector_0, in]
+- [quantum_controllers_Initializer_0, out, quantum_gates_X_0, in]
+- [quantum_controllers_QuTiP_Simulator_0, out, quantum_controllers_Generator_0, in]
+- [quantum_controllers_QuTiP_Simulator_0, simulated_data, quantum_controllers_Generator_0,
+  simulated_data]
+- [quantum_controllers_readout_0, out, quantum_controllers_Coprocessor_0, in]
+- [quantum_gates_X_0, out, quantum_controllers_readout_0, in]
+- [quantum_measurements_Detector_0, result, quantum_viewer_QuTiP_Bloch_0, result]
+
+metadata:
+  file_format: 1

@@ -1,0 +1,76 @@
+id: quantum_controllers_Coprocessor
+label: Quantum Coprocessor
+flags: [ 'python', 'cpp' ]
+
+
+parameters:
+-   id: qubit_id
+    label: Qubit ID
+    dtype: real
+    default: 0
+    hide: ${ ('none' if int(qubit_id) == 0 else 'part') }
+-   id: samples_per_second
+    label: Sample Rate
+    dtype: real
+    default: samp_rate
+-   id: scale_rate
+    label: Time Scale Rate
+    dtype: float
+    default: 1000000000.0
+-   id: showSyncPort
+    label: Show Sync Port
+    dtype: bool
+    default: 'False'
+    options: ['True', 'False']
+    option_labels: ['Yes', 'No']
+    hide: part
+
+
+inputs:
+-   domain: message
+    id: in
+-   domain: message
+    id: SYNC_CLK_in
+    optional: true
+    hide: ${ showSyncPort }
+-   domain: message
+    id: feedback_in
+    optional: true
+
+
+outputs:
+-   domain: message
+    id: out
+    optional: true
+-   domain: stream
+    label: gate_wave
+    dtype: complex
+-   domain: stream
+    label: control_wave
+    dtype: complex
+-   domain: stream
+    label: reqdout_wave
+    dtype: complex
+
+
+templates:
+    imports: import quantum
+    make: quantum.controllers_Coprocessor(${qubit_id}, ${samples_per_second}, ${scale_rate}, ${showSyncPort})
+
+
+cpp_templates:
+    includes: [ '#include <quantum/controllers_Coprocessor.h>' ]
+    declarations: 'quantum::controllers_Coprocessor::sptr ${id};'
+    link: ['gnuradio-quantum']
+    make: |-
+        this->${id} = quantum::controllers_Coprocessor::make(${qubit_id}, ${samples_per_second}, ${scale_rate}, ${showSyncPort});
+    translations:
+        "'": '"'
+        'True': 'true'
+        'False': 'false'
+
+
+documentation: |-
+    Please use "gates params" block, if you want to NOT input each parameters for all gate.
+
+file_format: 1

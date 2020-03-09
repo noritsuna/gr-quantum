@@ -1,0 +1,73 @@
+id: quantum_gates_CNOT
+label: Gate CNOT
+flags: [ 'python', 'cpp' ]
+
+parameters:
+-   id: CTRL_mode
+    label: DC mode
+    dtype: enum
+    default: 'False'
+    options: ['True', 'False']
+    option_labels: ['Yes', 'No']
+    hide: part
+-   id: freq
+    label: Frequency
+    dtype: real
+    default: 1000
+    hide: ${ ('part' if  CTRL_mode == 'False' else 'all') }
+-   id: I_amp
+    label: I Amplitude
+    dtype: float
+    default: 1.0
+-   id: Q_amp
+    label: Q Amplitude
+    dtype: float
+    default: 1.0
+-   id: I_bw
+    label: I Bandwidth
+    dtype: real
+    default: 10
+    hide: ${ ('part' if  CTRL_mode == 'False' else 'all') }
+-   id: Q_bw
+    label: Q Bandwidth
+    dtype: real
+    default: 10
+    hide: ${ ('part' if  CTRL_mode == 'False' else 'all') }
+-   id: proc_time
+    label: Processing Time(ns)
+    dtype: real
+    default: 1000000
+-   id: samples_per_second
+    label: Sample Rate
+    dtype: real
+    default: samp_rate
+    hide: ${ ('part' if  CTRL_mode == 'False' else 'all') }
+
+inputs:
+-   domain: message
+    id: in
+
+outputs:
+-   domain: message
+    id: out
+-   domain: message
+    id: CTRL_port
+
+templates:
+    imports: import quantum
+    make: quantum.gates_CNOT(${CTRL_mode}, ${freq}, ${I_amp}, ${Q_amp}, ${I_bw}, ${Q_bw}, ${proc_time}, ${samples_per_second})
+
+cpp_templates:
+    includes: [ '#include <quantum/gates_CNOT.h>' ]
+    declarations: 'quantum::gates_CNOT::sptr ${id};'
+    make: 'this->${id} = quantum::gates_CNOT::make(${CTRL_mode}, ${freq}, ${I_amp}, ${Q_amp}, ${I_bw}, ${Q_bw}, ${proc_time}, ${samples_per_second});'
+    link: ['gnuradio-quantum']
+    translations:
+        "'": '"'
+        'True': 'true'
+        'False': 'false'
+
+documentation: |-
+    Please use with Junction Point gate.
+
+file_format: 1

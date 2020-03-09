@@ -1,0 +1,77 @@
+id: quantum_controllers_Initializer
+label: Initializer
+flags: [ 'python', 'cpp' ]
+
+parameters:
+-   id: qubit_id
+    label: Qubit ID
+    dtype: real
+-   id: isFeedbackMode
+    label: Feedbacked Init Mode
+    dtype: bool
+    default: 'False'
+    options: ['True', 'False']
+    option_labels: ['Yes', 'No']
+    hide: part
+-   id: freq
+    label: Frequency
+    dtype: real
+    default: 1000
+-   id: I_amp
+    label: I Amplitude
+    dtype: float
+    default: 1.0
+-   id: Q_amp
+    label: Q Amplitude
+    dtype: float
+    default: 1.0
+-   id: I_bw
+    label: I Bandwidth
+    dtype: real
+    default: 10
+-   id: Q_bw
+    label: Q Bandwidth
+    dtype: real
+    default: 10
+-   id: proc_time
+    label: Processing Time(ns)
+    dtype: real
+    default: 1000000
+-   id: samples_per_second
+    label: Sample Rate
+    dtype: real
+    default: samp_rate
+
+inputs:
+-   domain: message
+    id: in
+    optional: true
+    hide: ${ isFeedbackMode }
+-   domain: message
+    id: feedback
+    optional: true
+    hide: ${ isFeedbackMode }
+
+outputs:
+-   domain: message
+    id: out
+
+templates:
+    imports: import quantum
+    make: quantum.controllers_Initializer(${qubit_id}, ${freq}, ${I_amp}, ${Q_amp}, ${I_bw}, ${Q_bw}, ${proc_time}, ${samples_per_second}, ${isFeedbackMode})
+
+cpp_templates:
+    includes: [ '#include <quantum/controllers_Initializer.h>' ]
+    declarations: 'quantum::controllers_Initializer::sptr ${id};'
+    make: 'this->${id} = quantum::controllers_Initializer::make(${qubit_id}, ${freq}, ${I_amp}, ${Q_amp}, ${I_bw}, ${Q_bw}, ${proc_time}, ${samples_per_second}, ${isFeedbackMode});'
+    link: ['gnuradio-quantum']
+    translations:
+        "'": '"'
+        'True': 'true'
+        'False': 'false'
+
+documentation: |-
+    Please input these parameters into the Coprocessor Block, if you want to use same parameters for all gate.
+    The Coprocessor Block DO NOT send microwave by first this block(Initializer Block).
+
+file_format: 1

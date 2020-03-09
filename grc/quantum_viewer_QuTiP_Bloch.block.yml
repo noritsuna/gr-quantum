@@ -1,0 +1,27 @@
+id: quantum_viewer_QuTiP_Bloch
+label: QuTiP Bloch
+
+parameters:
+-   id: qubit_id
+    label: Qubit ID
+    dtype: int
+    default: 1
+
+inputs:
+-   domain: message
+    id: result
+
+templates:
+    imports: |-
+        from quantum import quantum_viewer_QuTiP_Bloch
+        import threading
+    make: |-
+        quantum.quantum_viewer_QuTiP_Bloch(${qubit_id})
+        self.${id}_thread = threading.Thread(target=self.${id}.serve_forever)
+        self.${id}_thread.daemon = True
+        self.${id}_thread.start()
+
+documentation: |-
+    Please setup QuTiP.
+
+file_format: 1

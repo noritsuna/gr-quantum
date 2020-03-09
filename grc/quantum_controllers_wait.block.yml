@@ -1,0 +1,36 @@
+id: quantum_controllers_wait
+label: Sync Wait
+flags: [ 'python', 'cpp' ]
+
+parameters:
+-   id: wait_time
+    label: Wait Time(ns)
+    dtype: real
+    default: 0
+
+inputs:
+-   domain: message
+    id: in
+
+outputs:
+-   domain: message
+    id: out
+
+templates:
+    imports: import quantum
+    make: quantum.controllers_wait(${wait_time})
+
+cpp_templates:
+    includes: [ '#include <quantum/controllers_wait.h>' ]
+    declarations: 'quantum::controllers_wait::sptr ${id};'
+    make: 'this->${id} = quantum::controllers_wait::make(${wait_time});'
+    link: ['gnuradio-quantum']
+    translations:
+        "'": '"'
+        'True': 'true'
+        'False': 'false'
+
+documentation: |-
+    Please use this Block, if you want to wait time. Becuase this program run on CPU time.
+
+file_format: 1

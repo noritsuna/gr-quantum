@@ -1,0 +1,44 @@
+id: quantum_API_OpenQL_Sink
+label: OpenQL Sink
+flags: [ python, cpp ]
+
+parameters:
+-   id: ipaddr
+    label: OpenQL IP Address
+    dtype: string
+    default: 127.0.0.1
+-   id: port
+    label: OpenQL Port
+    dtype: int
+    default: 7001
+-   id: qubit_bitnum
+    label: Qubit Bit Number
+    dtype: int
+    default: 1
+-   id: qreg_num
+    label: Qubit Register Number
+    dtype: int
+    default: 1
+
+inputs:
+-   domain: message
+    id: result
+
+
+templates:
+    imports: import quantum
+    make: quantum.API_OpenQL_Sink(${ipaddr}, ${port}, ${qubit_bitnum}, ${qreg_num})
+
+
+cpp_templates:
+    includes: [ '#include <quantum/API_OpenQL_Sink.h>' ]
+    declarations: 'quantum::API_OpenQL_Sink::sptr ${id};'
+    link: ['gnuradio-quantum']
+    make: |-
+        this->${id} = quantum::API_OpenQL_Sink::make(${ipaddr}, ${port}, ${qubit_bitnum}, ${qreg_num});
+    translations:
+        "'": '"'
+        'True': 'true'
+        'False': 'false'
+
+file_format: 1

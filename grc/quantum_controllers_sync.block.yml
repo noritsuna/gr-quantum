@@ -1,0 +1,26 @@
+id: quantum_controllers_sync
+label: Sync Clock
+flags: [ 'python', 'cpp' ]
+
+outputs:
+-   domain: message
+    id: SYNC_CLK_out
+
+templates:
+    imports: import quantum
+    make: quantum.controllers_sync()
+
+cpp_templates:
+    includes: [ '#include <quantum/controllers_sync.h>' ]
+    declarations: 'quantum::controllers_sync::sptr ${id};'
+    make: 'this->${id} = quantum::controllers_sync::make();'
+    link: ['gnuradio-quantum']
+    translations:
+        "'": '"'
+        'True': 'true'
+        'False': 'false'
+
+documentation: |-
+    Please use it for SDRs, if you want to sync each SDRs.
+
+file_format: 1

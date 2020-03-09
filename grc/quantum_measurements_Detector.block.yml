@@ -1,0 +1,76 @@
+id: quantum_measurements_Detector
+label: Qubit Detector
+flags: [ 'python', 'cpp' ]
+
+parameters:
+-   id: qubit_num
+    label: Qubit Number
+    dtype: int
+    default: 1
+-   id: samples_per_second
+    label: Sample Rate
+    dtype: real
+    default: samp_rate
+-   id: scale_rate
+    label: Time Scale Rate
+    dtype: float
+    default: 1000000000.0
+-   id: freq_threshold_rate
+    label: Frequency Threshold Rate(%)
+    dtype: float
+    default: 10.0
+-   id: amp_threshold_rate
+    label: Amplitude Threshold Rate(%)
+    dtype: float
+    default: 10.0
+-   id: bw_threshold_rate
+    label: Bandwidth Threshold Rate(%)
+    dtype: float
+    default: 10.0   
+-   id: proc_time_threshold_rate
+    label: Proccessing Time Threshold Rate(%)
+    dtype: float
+    default: 10.0
+-   id: qubit_pole
+    label: Qubit Pole
+    dtype: enum
+    default: 'True'
+    options: ['True', 'False']
+    option_labels: ['North', 'South']
+
+inputs:
+-   domain: message
+    id: in
+-   domain: stream
+    label: measurement
+    dtype: complex
+    multiplicity: ${ qubit_num }
+
+outputs:
+-   domain: message
+    id: result
+    multiplicity: ${ qubit_num }
+-   domain: message
+    id: feedback
+    optional: true
+
+
+templates:
+    imports: import quantum
+    make: quantum.measurements_Detector(${qubit_num}, ${samples_per_second}, ${scale_rate}, ${freq_threshold_rate}, ${amp_threshold_rate}, ${bw_threshold_rate}, ${proc_time_threshold_rate}, ${qubit_pole})
+
+
+cpp_templates:
+    includes: [ '#include <quantum/measurements_Detector.h>' ]
+    declarations: 'quantum::measurements_Detector::sptr ${id};'
+    make: 'this->${id} = quantum::measurements_Detector::make(${qubit_num}, ${samples_per_second}, ${scale_rate}, ${freq_threshold_rate}, ${amp_threshold_rate}, ${bw_threshold_rate}, ${proc_time_threshold_rate}, ${qubit_pole});'
+    link: ['gnuradio-quantum']
+    translations:
+        "'": '"'
+        'True': 'true'
+        'False': 'false'
+
+documentation: |-
+    Please use this Block, if you want to wait time. Becuase this program run on CPU time.
+
+file_format: 1

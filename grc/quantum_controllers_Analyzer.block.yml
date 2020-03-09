@@ -1,0 +1,85 @@
+id: quantum_controllers_Analyzer
+label: Qubit Analyzer
+flags: [ 'python', 'cpp' ]
+
+parameters:
+-   id: qubit_num
+    label: Qubit Number
+    dtype: real
+    default: 1
+-   id: samples_per_second
+    label: Sample Rate
+    dtype: real
+    default: samp_rate
+-   id: scale_rate
+    label: Time Scale Rate
+    dtype: float
+    default: 1000000000.0
+-   id: freq_threshold_rate
+    label: Frequency Threshold Rate(%)
+    dtype: float
+    default: 10.0
+-   id: amp_threshold_rate
+    label: Amplitude Threshold Rate(%)
+    dtype: float
+    default: 10.0
+-   id: bw_threshold_rate
+    label: Bandwidth Threshold Rate(%)
+    dtype: float
+    default: 10.0   
+-   id: proc_time_threshold_rate
+    label: Proccessing Time Threshold Rate(%)
+    dtype: float
+    default: 10.0
+-   id: showSyncPort
+    label: Show Sync Port
+    dtype: bool
+    default: 'False'
+    options: ['True', 'False']
+    option_labels: ['Yes', 'No']
+    hide: part
+
+inputs:
+-   domain: message
+    id: in
+-   domain: stream
+    label: gate_wave
+    dtype: complex
+    multiplicity: ${ qubit_num }
+-   domain: stream
+    label: control_wave
+    dtype: complex
+    multiplicity: ${ qubit_num }
+-   domain: stream
+    label: reqdout_wave
+    dtype: complex
+    multiplicity: ${ qubit_num }
+-   domain: message
+    id: SYNC_CLK_in
+    optional: true
+    hide: ${ showSyncPort }
+
+outputs:
+-   domain: message
+    id: out
+-   domain: message
+    id: analyzed_data
+
+templates:
+    imports: import quantum
+    make: quantum.controllers_Analyzer(${qubit_num}, ${samples_per_second}, ${scale_rate}, ${freq_threshold_rate}, ${amp_threshold_rate}, ${bw_threshold_rate}, ${proc_time_threshold_rate}, ${showSyncPort})
+
+cpp_templates:
+    includes: [ '#include <quantum/controllers_Analyzer.h>' ]
+    declarations: 'quantum::controllers_Analyzer::sptr ${id};'
+    make: 'this->${id} = quantum::controllers_Analyzer::make(${qubit_num}, ${samples_per_second}, ${scale_rate}, ${freq_threshold_rate}, ${amp_threshold_rate}, ${bw_threshold_rate}, ${proc_time_threshold_rate}, ${showSyncPort});'
+    link: ['gnuradio-quantum']
+    translations:
+        "'": '"'
+        'True': 'true'
+        'False': 'false'
+
+documentation: |-
+    Please input All Gate's parameters.
+
+file_format: 1

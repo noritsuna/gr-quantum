@@ -1,0 +1,61 @@
+id: quantum_controllers_Generator
+label: Qubit RO Generator
+flags: [ 'python', 'cpp' ]
+
+parameters:
+-   id: qubit_num
+    label: Qubit Number
+    dtype: real
+    default: 1
+-   id: samples_per_second
+    label: Sample Rate
+    dtype: real
+    default: samp_rate
+-   id: scale_rate
+    label: Time Scale Rate
+    dtype: float
+    default: 1000000000.0
+-   id: showSyncPort
+    label: Show Sync Port
+    dtype: bool
+    default: 'False'
+    options: ['True', 'False']
+    option_labels: ['Yes', 'No']
+    hide: part
+
+inputs:
+-   domain: message
+    id: in
+-   domain: message
+    id: simulated_data
+-   domain: message
+    id: SYNC_CLK_in
+    optional: true
+    hide: ${ showSyncPort }
+
+outputs:
+-   domain: message
+    id: out
+-   domain: stream
+    label: measurement
+    dtype: complex
+    multiplicity: ${ qubit_num }
+
+templates:
+    imports: import quantum
+    make: quantum.controllers_Generator(${qubit_num}, ${samples_per_second}, ${scale_rate}, ${showSyncPort})
+
+cpp_templates:
+    includes: [ '#include <quantum/controllers_Generator.h>' ]
+    declarations: 'quantum::controllers_Generator::sptr ${id};'
+    make: 'this->${id} = quantum::controllers_Generator::make(${qubit_num}, ${samples_per_second}, ${scale_rate}, ${showSyncPort});'
+    link: ['gnuradio-quantum']
+    translations:
+        "'": '"'
+        'True': 'true'
+        'False': 'false'
+
+documentation: |-
+    Please use it with Analyzer & Simulator.
+
+file_format: 1

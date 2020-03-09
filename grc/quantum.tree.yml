@@ -1,0 +1,32 @@
+'[Quantum]':
+- Controllers:
+  - quantum_controllers_Coprocessor
+  - quantum_controllers_Initializer
+  - quantum_controllers_readout
+  - quantum_controllers_QuTiP_Simulator
+  - quantum_controllers_Analyzer
+  - quantum_controllers_Generator
+  - quantum_controllers_gatesParams
+  - quantum_controllers_sync
+  - quantum_controllers_wait
+  - quantum_controllers_OpenQLCode2Gate
+  - quantum_controllers_callback_message
+- Gates:
+  - quantum_gates_X
+  - quantum_gates_Y
+  - quantum_gates_Z
+  - quantum_gates_H
+  - quantum_gates_S
+  - quantum_gates_T
+  - quantum_gates_CNOT
+  - quantum_gates_junction
+- Measurements:
+  - quantum_measurements_Detector
+  - quantum_measurements_QuTiP_Wave2Qobj
+- Viewer:
+  - quantum_viewer_QuTiP_Bloch
+  - quantum_viewer_QuTiP_Histogram
+  - quantum_viewer_QuTiP_PlotFockDistribution
+- API:
+  - quantum_API_OpenQL_Source
+  - quantum_API_OpenQL_Sink

@@ -1,0 +1,44 @@
+id: quantum_controllers_QuTiP_Simulator
+label: QuTiP Qubit Simulator
+
+parameters:
+-   id: qubit_num
+    label: Qubit Number
+    dtype: real
+    default: 1
+-   id: qubit_noise_rate
+    label: Qubit Noise Rate(%)
+    dtype: float
+    default: 0.0
+-   id: scale_rate
+    label: Time Scale Rate
+    dtype: float
+    default: 1000000000.0
+
+inputs:
+-   domain: message
+    id: in
+-   domain: message
+    id: analyzed_data
+
+outputs:
+-   domain: message
+    id: out
+-   domain: message
+    id: simulated_data
+
+templates:
+    imports: |-
+        from quantum import quantum_controllers_QuTiP_Simulator
+        import threading
+    make: |-
+        quantum.quantum_controllers_QuTiP_Simulator(${qubit_num}, ${qubit_noise_rate}, ${scale_rate})
+        self.${id}_thread = threading.Thread(target=self.${id}.serve_forever)
+        self.${id}_thread.daemon = True
+        self.${id}_thread.start()
+
+
+documentation: |-
+    Please use it with Analyzer & Generator.
+
+file_format: 1

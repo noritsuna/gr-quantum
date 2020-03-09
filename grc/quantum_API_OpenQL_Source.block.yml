@@ -1,0 +1,41 @@
+id: quantum_API_OpenQL_Source
+label: OpenQL Source
+flags: [ python, cpp ]
+
+parameters:
+-   id: port
+    label: Listen Port
+    dtype: int
+    default: 7000
+-   id: qubit_bitnum
+    label: Qubit Bit Number
+    dtype: int
+    default: 1
+-   id: qreg_num
+    label: Qubit Register Number
+    dtype: int
+    default: 1
+
+outputs:
+-   domain: message
+    id: out
+    multiplicity: ${ qubit_bitnum*qreg_num }
+
+
+templates:
+    imports: import quantum
+    make: quantum.API_OpenQL_Source(${port}, ${qubit_bitnum}, ${qreg_num})
+
+
+cpp_templates:
+    includes: [ '#include <quantum/API_OpenQL_Source.h>' ]
+    declarations: 'quantum::API_OpenQL_Source::sptr ${id};'
+    link: ['gnuradio-quantum']
+    make: |-
+        this->${id} = quantum::API_OpenQL_Source::make(${port}, ${qubit_bitnum}, ${qreg_num});
+    translations:
+        "'": '"'
+        'True': 'true'
+        'False': 'false'
+
+file_format: 1

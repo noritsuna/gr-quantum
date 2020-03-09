@@ -1,0 +1,41 @@
+id: quantum_controllers_callback_message
+label: Callback Message(Don't Use!)
+flags: [ 'python', 'cpp' ]
+
+inputs:
+-   domain: message
+    id: in
+    optional: true
+-   domain: message
+    id: SYNC_CLK_in
+    optional: true
+-   domain: message
+    id: simulated_data
+    optional: true
+-   domain: message
+    id: feedback_in
+    optional: true
+ 
+outputs:
+-   domain: message
+    id: out
+    optional: true
+
+templates:
+    imports: import quantum
+    make: quantum.controllers_callback_message()
+
+cpp_templates:
+    includes: [ '#include <quantum/controllers_callback_message.h>' ]
+    declarations: 'quantum::controllers_callback_message::sptr ${id};'
+    make: 'this->${id} = quantum::controllers_callback_message::make();'
+    link: ['gnuradio-quantum']
+    translations:
+        "'": '"'
+        'True': 'true'
+        'False': 'false'
+
+documentation: |-
+    Please DO NOT use this Block.
+
+file_format: 1

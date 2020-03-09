@@ -1,0 +1,446 @@
+id: quantum_controllers_gatesParams
+label: Gates Parameters
+flags: [ 'python', 'cpp' ]
+
+
+parameters:
+-   id: qubit_id
+    label: Qubit ID
+    dtype: int
+    default: 0
+    category: General
+-   id: samples_per_second
+    label: Sample Rate
+    dtype: real
+    default: samp_rate
+    category: General
+-   id: INIT_freq
+    label: Frequency
+    dtype: real
+    default: 0
+    category: Initializer
+-   id: INIT_I_amp
+    label: I Amplitude
+    dtype: float
+    default: 0
+    category: Initializer
+-   id: INIT_Q_amp
+    label: Q Amplitude
+    dtype: float
+    default: 0
+    category: Initializer
+-   id: INIT_I_bw
+    label: I Bandwidth
+    dtype: real
+    default: 0
+    category: Initializer
+-   id: INIT_Q_bw
+    label: Q Bandwidth
+    dtype: real
+    default: 0
+    category: Initializer
+-   id: INIT_proc_time
+    label: Processing Time(ns)
+    dtype: real
+    default: 0
+    category: Initializer
+-   id: X_freq
+    label: Frequency
+    dtype: real
+    default: 0
+    category: X gate
+-   id: X_I_amp
+    label: I Amplitude
+    dtype: float
+    default: 0
+    category: X gate
+-   id: X_Q_amp
+    label: Q Amplitude
+    dtype: float
+    default: 0
+    category: X gate
+-   id: X_I_bw
+    label: I Bandwidth
+    dtype: real
+    default: 0
+    category: X gate
+-   id: X_Q_bw
+    label: Q Bandwidth
+    dtype: real
+    default: 0
+    category: X gate
+-   id: X_proc_time
+    label: Processing Time(ns)
+    dtype: real
+    default: 0
+    category: X gate
+-   id: X_freq
+    label: Frequency
+    dtype: real
+    default: 0
+    category: X gate
+-   id: X_I_amp
+    label: I Amplitude
+    dtype: float
+    default: 0
+    category: X gate
+-   id: X_Q_amp
+    label: Q Amplitude
+    dtype: float
+    default: 0
+    category: X gate
+-   id: X_I_bw
+    label: I Bandwidth
+    dtype: real
+    default: 0
+    category: X gate
+-   id: X_Q_bw
+    label: Q Bandwidth
+    dtype: real
+    default: 0
+    category: X gate
+-   id: X_proc_time
+    label: Processing Time(ns)
+    dtype: real
+    default: 0
+    category: X gate
+-   id: Y_freq
+    label: Frequency
+    dtype: real
+    default: 0
+    category: Y gate
+-   id: Y_I_amp
+    label: I Amplitude
+    dtype: float
+    default: 0
+    category: Y gate
+-   id: Y_Q_amp
+    label: Q Amplitude
+    dtype: float
+    default: 0
+    category: Y gate
+-   id: Y_I_bw
+    label: I Bandwidth
+    dtype: real
+    default: 0
+    category: Y gate
+-   id: Y_Q_bw
+    label: Q Bandwidth
+    dtype: real
+    default: 0
+    category: Y gate
+-   id: Y_proc_time
+    label: Processing Time(ns)
+    dtype: real
+    default: 0
+    category: Y gate
+-   id: Z_freq
+    label: Frequency
+    dtype: real
+    default: 0
+    category: Z gate
+-   id: Z_I_amp
+    label: I Amplitude
+    dtype: float
+    default: 0
+    category: Z gate
+-   id: Z_Q_amp
+    label: Q Amplitude
+    dtype: float
+    default: 0
+    category: Z gate
+-   id: Z_I_bw
+    label: I Bandwidth
+    dtype: real
+    default: 0
+    category: Z gate
+-   id: Z_Q_bw
+    label: Q Bandwidth
+    dtype: real
+    default: 0
+    category: Z gate
+-   id: Z_proc_time
+    label: Processing Time(ns)
+    dtype: real
+    default: 0
+    category: Z gate
+-   id: H_freq
+    label: Frequency
+    dtype: real
+    default: 0
+    category: H gate
+-   id: H_I_amp
+    label: I Amplitude
+    dtype: float
+    default: 0
+    category: H gate
+-   id: H_Q_amp
+    label: Q Amplitude
+    dtype: float
+    default: 0
+    category: H gate
+-   id: H_I_bw
+    label: I Bandwidth
+    dtype: real
+    default: 0
+    category: H gate
+-   id: H_Q_bw
+    label: Q Bandwidth
+    dtype: real
+    default: 0
+    category: H gate
+-   id: H_proc_time
+    label: Processing Time(ns)
+    dtype: real
+    default: 0
+    category: H gate
+-   id: T_freq
+    label: Frequency
+    dtype: real
+    default: -1
+    category: T gate
+-   id: T_I_amp
+    label: I Amplitude
+    dtype: float
+    default: 0
+    category: T gate
+-   id: T_Q_amp
+    label: Q Amplitude
+    dtype: float
+    default: 0
+    category: T gate
+-   id: T_I_bw
+    label: I Bandwidth
+    dtype: real
+    default: 0
+    category: T gate
+-   id: T_Q_bw
+    label: Q Bandwidth
+    dtype: real
+    default: 0
+    category: T gate
+-   id: T_proc_time
+    label: Processing Time(ns)
+    dtype: real
+    default: 0
+    category: T gate
+-   id: S_freq
+    label: Frequency
+    dtype: real
+    default: 0
+    category: S gate
+-   id: S_I_amp
+    label: I Amplitude
+    dtype: float
+    default: 0
+    category: S gate
+-   id: S_Q_amp
+    label: Q Amplitude
+    dtype: float
+    default: 0
+    category: S gate
+-   id: S_I_bw
+    label: I Bandwidth
+    dtype: real
+    default: 0
+    category: S gate
+-   id: S_Q_bw
+    label: Q Bandwidth
+    dtype: real
+    default: 0
+    category: S gate
+-   id: S_proc_time
+    label: Processing Time(ns)
+    dtype: real
+    default: 0
+    category: S gate
+-   id: CNOT_CTRL_mode
+    label: DC mode
+    dtype: enum
+    default: 'False'
+    options: ['True', 'False']
+    option_labels: ['Yes', 'No']
+    hide: ${ ('part' if  CNOT_CTRL_mode == 'False' else 'all') }
+    category: CNOT gate
+-   id: CNOT_freq
+    label: Frequency
+    dtype: real
+    default: 0
+    hide: ${ ('part' if  CNOT_CTRL_mode == 'False' else 'all') }
+    category: CNOT gate
+-   id: CNOT_I_amp
+    label: I Amplitude
+    dtype: float
+    default: 0
+    category: CNOT gate
+-   id: CNOT_Q_amp
+    label: Q Amplitude
+    dtype: float
+    default: 0
+    category: CNOT gate
+-   id: CNOT_I_bw
+    label: I Bandwidth
+    dtype: real
+    default: 0
+    hide: ${ ('part' if  CNOT_CTRL_mode == 'False' else 'all') }
+    category: CNOT gate
+-   id: CNOT_Q_bw
+    label: Q Bandwidth
+    dtype: real
+    default: 0
+    hide: ${ ('part' if  CNOT_CTRL_mode == 'False' else 'all') }
+    category: CNOT gate
+-   id: CNOT_proc_time
+    label: Processing Time(ns)
+    dtype: real
+    default: 0
+    hide: ${ ('part' if  CNOT_CTRL_mode == 'False' else 'all') }
+    category: CNOT gate
+-   id: JUNC_CTRL_mode
+    label: DC mode
+    dtype: enum
+    default: 'False'
+    options: ['True', 'False']
+    option_labels: ['Yes', 'No']
+    hide: ${ ('part' if  JUNC_CTRL_mode == 'False' else 'all') }
+    category: JUNC gate
+-   id: JUNC_freq
+    label: Frequency
+    dtype: real
+    default: 0
+    hide: ${ ('part' if  JUNC_CTRL_mode == 'False' else 'all') }
+    category: JUNC gate
+-   id: JUNC_I_amp
+    label: I Amplitude
+    dtype: float
+    default: 0
+    category: JUNC gate
+-   id: JUNC_Q_amp
+    label: Q Amplitude
+    dtype: float
+    default: 0
+    category: JUNC gate
+-   id: JUNC_I_bw
+    label: I Bandwidth
+    dtype: real
+    default: 0
+    hide: ${ ('part' if  JUNC_CTRL_mode == 'False' else 'all') }
+    category: JUNC gate
+-   id: JUNC_Q_bw
+    label: Q Bandwidth
+    dtype: real
+    default: 0
+    hide: ${ ('part' if  JUNC_CTRL_mode == 'False' else 'all') }
+    category: JUNC gate
+-   id: JUNC_proc_time
+    label: Processing Time(ns)
+    dtype: real
+    default: 0
+    hide: ${ ('part' if  JUNC_CTRL_mode == 'False' else 'all') }
+    category: JUNC gate
+-   id: RO_freq
+    label: Frequency
+    dtype: real
+    default: 0
+    category: readout
+-   id: RO_I_amp
+    label: I Amplitude
+    dtype: float
+    default: 0
+    category: readout
+-   id: RO_Q_amp
+    label: Q Amplitude
+    dtype: float
+    default: 0
+    category: readout
+-   id: RO_I_bw
+    label: I Bandwidth
+    dtype: real
+    default: 0
+    category: readout
+-   id: RO_Q_bw
+    label: Q Bandwidth
+    dtype: real
+    default: 0
+    category: readout
+-   id: RO_proc_time
+    label: Processing Time(ns)
+    dtype: real
+    default: 0
+    category: readout
+
+
+inputs:
+-   domain: message
+    id: in
+    optional: true
+
+
+outputs:
+-   domain: message
+    id: out
+
+
+templates:
+    imports: import quantum
+    make: |-
+        quantum.controllers_gatesParams(${qubit_id})
+        self.${id}.set_X_gate_parameters(${X_freq}, ${X_I_amp}, ${X_Q_amp}, ${X_I_bw}, ${X_Q_bw}, ${X_proc_time}, ${samples_per_second})
+        self.${id}.set_Y_gate_parameters(${Y_freq}, ${Y_I_amp}, ${Y_Q_amp}, ${Y_I_bw}, ${Y_Q_bw}, ${Y_proc_time}, ${samples_per_second})
+        self.${id}.set_Z_gate_parameters(${Z_freq}, ${Z_I_amp}, ${Z_Q_amp}, ${Z_I_bw}, ${Z_Q_bw}, ${Z_proc_time}, ${samples_per_second})
+        self.${id}.set_H_gate_parameters(${H_freq}, ${H_I_amp}, ${H_Q_amp}, ${H_I_bw}, ${H_Q_bw}, ${H_proc_time}, ${samples_per_second})
+        self.${id}.set_T_gate_parameters(${T_freq}, ${T_I_amp}, ${T_Q_amp}, ${T_I_bw}, ${T_Q_bw}, ${T_proc_time}, ${samples_per_second})
+        self.${id}.set_S_gate_parameters(${S_freq}, ${S_I_amp}, ${S_Q_amp}, ${S_I_bw}, ${S_Q_bw}, ${S_proc_time}, ${samples_per_second})
+        self.${id}.set_INIT_parameters(${INIT_freq}, ${INIT_I_amp}, ${INIT_Q_amp}, ${INIT_I_bw}, ${INIT_Q_bw}, ${INIT_proc_time}, ${samples_per_second})
+        self.${id}.set_RO_parameters(${RO_freq}, ${RO_I_amp}, ${RO_Q_amp}, ${RO_I_bw}, ${RO_Q_bw}, ${RO_proc_time}, ${samples_per_second})
+        self.${id}.set_CNOT_parameters(${CNOT_freq}, ${CNOT_I_amp}, ${CNOT_Q_amp}, ${CNOT_I_bw}, ${CNOT_Q_bw}, ${CNOT_proc_time}, ${samples_per_second}, ${CNOT_CTRL_mode})
+    callbacks:
+    - set_X_gate_parameters(${X_freq}, ${X_I_amp}, ${X_Q_amp}, ${X_I_bw}, ${X_Q_bw}, ${X_proc_time}, ${samples_per_second})
+    - set_Y_gate_parameters(${Y_freq}, ${Y_I_amp}, ${Y_Q_amp}, ${Y_I_bw}, ${Y_Q_bw}, ${Y_proc_time}, ${samples_per_second})
+    - set_Z_gate_parameters(${Z_freq}, ${Z_I_amp}, ${Z_Q_amp}, ${Z_I_bw}, ${Z_Q_bw}, ${Z_proc_time}, ${samples_per_second})
+    - set_H_gate_parameters(${H_freq}, ${H_I_amp}, ${H_Q_amp}, ${H_I_bw}, ${H_Q_bw}, ${H_proc_time}, ${samples_per_second})
+    - set_T_gate_parameters(${T_freq}, ${T_I_amp}, ${T_Q_amp}, ${T_I_bw}, ${T_Q_bw}, ${T_proc_time}, ${samples_per_second})
+    - set_S_gate_parameters(${S_freq}, ${S_I_amp}, ${S_Q_amp}, ${S_I_bw}, ${S_Q_bw}, ${S_proc_time}, ${samples_per_second})
+    - set_INIT_parameters(${INIT_freq}, ${INIT_I_amp}, ${INIT_Q_amp}, ${INIT_I_bw}, ${INIT_Q_bw}, ${INIT_proc_time}, ${samples_per_second})
+    - set_RO_parameters(${RO_freq}, ${RO_I_amp}, ${RO_Q_amp}, ${RO_I_bw}, ${RO_Q_bw}, ${RO_proc_time}, ${samples_per_second})
+    - set_CNOT_parameters(${CNOT_freq}, ${CNOT_I_amp}, ${CNOT_Q_amp}, ${CNOT_I_bw}, ${CNOT_Q_bw}, ${CNOT_proc_time}, ${samples_per_second}, ${CNOT_CTRL_mode})
+    - set_JUNC_parameters(${JUNC_freq}, ${JUNC_I_amp}, ${JUNC_Q_amp}, ${JUNC_I_bw}, ${JUNC_Q_bw}, ${JUNC_proc_time}, ${samples_per_second}, ${JUNC_CTRL_mode})
+
+
+cpp_templates:
+    includes: [ '#include <quantum/controllers_gatesParams.h>' ]
+    declarations: 'quantum::controllers_gatesParams::sptr ${id};'
+    link: ['gnuradio-quantum']
+    make: |-
+        this->${id} = quantum::controllers_gatesParams::make(${qubit_id});
+        this->${id}->set_X_gate_parameters(${X_freq}, ${X_I_amp}, ${X_Q_amp}, ${X_I_bw}, ${X_Q_bw}, ${X_proc_time}, ${samples_per_second});
+        this->${id}->set_Y_gate_parameters(${Y_freq}, ${Y_I_amp}, ${Y_Q_amp}, ${Y_I_bw}, ${Y_Q_bw}, ${Y_proc_time}, ${samples_per_second});
+        this->${id}->set_Z_gate_parameters(${Z_freq}, ${Z_I_amp}, ${Z_Q_amp}, ${Z_I_bw}, ${Z_Q_bw}, ${Z_proc_time}, ${samples_per_second});
+        this->${id}->set_H_gate_parameters(${H_freq}, ${H_I_amp}, ${H_Q_amp}, ${H_I_bw}, ${H_Q_bw}, ${H_proc_time}, ${samples_per_second});
+        this->${id}->set_T_gate_parameters(${T_freq}, ${T_I_amp}, ${T_Q_amp}, ${T_I_bw}, ${T_Q_bw}, ${T_proc_time}, ${samples_per_second});
+        this->${id}->set_S_gate_parameters(${S_freq}, ${S_I_amp}, ${S_Q_amp}, ${S_I_bw}, ${S_Q_bw}, ${S_proc_time}, ${samples_per_second});
+        this->${id}->set_INIT_parameters(${INIT_freq}, ${INIT_I_amp}, ${INIT_Q_amp}, ${INIT_I_bw}, ${INIT_Q_bw}, ${INIT_proc_time}, ${samples_per_second});
+        this->${id}->set_RO_parameters(${RO_freq}, ${RO_I_amp}, ${RO_Q_amp}, ${RO_I_bw}, ${RO_Q_bw}, ${RO_proc_time}, ${samples_per_second});
+        this->${id}->set_CNOT_parameters(${CNOT_freq}, ${CNOT_I_amp}, ${CNOT_Q_amp}, ${CNOT_I_bw}, ${CNOT_Q_bw}, ${CNOT_proc_time}, ${samples_per_second}, %{CNOT_CTRL_mode});
+        this->$(id)->set_JUNC_parameters(${JUNC_freq}, ${JUNC_I_amp}, ${JUNC_Q_amp}, ${JUNC_I_bw}, ${JUNC_Q_bw}, ${JUNC_proc_time}, ${samples_per_second}, ${JUNC_CTRL_mode});
+    callbacks:
+    - set_X_gate_parameters(${X_freq}, ${X_I_amp}, ${X_Q_amp}, ${X_I_bw}, ${X_Q_bw}, ${X_proc_time}, ${samples_per_second})
+    - set_Y_gate_parameters(${Y_freq}, ${Y_I_amp}, ${Y_Q_amp}, ${Y_I_bw}, ${Y_Q_bw}, ${Y_proc_time}, ${samples_per_second})
+    - set_Z_gate_parameters(${Z_freq}, ${Z_I_amp}, ${Z_Q_amp}, ${Z_I_bw}, ${Z_Q_bw}, ${Z_proc_time}, ${samples_per_second})
+    - set_H_gate_parameters(${H_freq}, ${H_I_amp}, ${H_Q_amp}, ${H_I_bw}, ${H_Q_bw}, ${H_proc_time}, ${samples_per_second})
+    - set_T_gate_parameters(${T_freq}, ${T_I_amp}, ${T_Q_amp}, ${T_I_bw}, ${T_Q_bw}, ${T_proc_time}, ${samples_per_second})
+    - set_S_gate_parameters(${S_freq}, ${S_I_amp}, ${S_Q_amp}, ${S_I_bw}, ${S_Q_bw}, ${S_proc_time}, ${samples_per_second})
+    - set_INIT_parameters(${INIT_freq}, ${INIT_I_amp}, ${INIT_Q_amp}, ${INIT_I_bw}, ${INIT_Q_bw}, ${INIT_proc_time}, ${samples_per_second})
+    - set_RO_parameters(${RO_freq}, ${RO_I_amp}, ${RO_Q_amp}, ${RO_I_bw}, ${RO_Q_bw}, ${RO_proc_time}, ${samples_per_second})
+    - set_CNOT_parameters(${CNOT_freq}, ${CNOT_I_amp}, ${CNOT_Q_amp}, ${CNOT_I_bw}, ${CNOT_Q_bw}, ${CNOT_proc_time}, ${samples_per_second}, ${CNOT_CTRL_mode})
+    - set_JUNC_parameters(${JUNC_freq}, ${JUNC_I_amp}, ${JUNC_Q_amp}, ${JUNC_I_bw}, ${JUNC_Q_bw}, ${JUNC_proc_time}, ${samples_per_second}, ${JUNC_CTRL_mode})
+    translations:
+        "'": '"'
+        'True': 'true'
+        'False': 'false'
+
+
+documentation: |-
+    Please input these parameters, if you want to NOT input each parameters for all gate.
+
+file_format: 1

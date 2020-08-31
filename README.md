@@ -10,8 +10,8 @@ These blocks are a Controller of Real Quantum Computer(One of the Quantum Firmwa
 First you need to install the dependencies (see below).
 
 ### Build GNU Radio
-These blocks require the GNU Radio 3.8.0.0 or new with the Python 3.6 on Ubuntu 18.04.  
-First, Please build and setup GNU Radio from source code with Python 3.6.  
+These blocks require the GNU Radio 3.8.0.0 or new with the Python 3.6 on Ubuntu 18.04 or the GNU Radio 3.8.1.0 or new with the Python 3.7 on Ubuntu 20.04 or the GNU Radio 3.8.1.0 or new with the Python 3.7 on Rasbian(Raspberry Pi).  
+First, Please build and setup GNU Radio from source code with Python 3.6 or Python3.7.
 
     $ sudo apt install git cmake g++ libboost-all-dev libgmp-dev libcppunit-dev swig python3 python3-dev python3-pip python3-numpy python3-mako python3-sphinx python3-lxml doxygen libfftw3-dev libcomedi-dev libsdl1.2-dev libgsl-dev libqwt-qt5-dev libqt5opengl5-dev python3-pyqt5 liblog4cpp5-dev libzmq3-dev python3-yaml python3-click python3-click-plugins
     $ sudo pip uninstall pybombs
@@ -36,11 +36,16 @@ Forth, Please edit setup_env.sh file for GNU Radio.
 
     ~/gnuradio/gnuradio38/setup_env.sh
 
-> Change "python2.6" paths to "python3.6" in PYTHONPATH.  
+> Ubuntu 18.04 : Change "python2.6" paths to "python3.6" in PYTHONPATH.  
+> Ubuntu 20.04 or new and Raspberry Pi : Change "python2.6" paths to "python3.7" in PYTHONPATH.  
 > Delete "python2.7" paths in PYTHONPATH.  
 > Add "python3" paths in PYTHONPATH.  
 
+Ubuntu 18.04 : 
     export PYTHONPATH="/home/siprop/gnuradio/gnuradio38/python:/home/siprop/gnuradio/gnuradio38/lib/python3.6/site-packages:/home/siprop/gnuradio/gnuradio38/lib64/python3.6/site-packages:/home/siprop/gnuradio/gnuradio38/lib/python3.6/dist-packages:/home/siprop/gnuradio/gnuradio38/lib64/python3.6/dist-packages:/home/siprop/gnuradio/gnuradio38/lib/python3/site-packages:/home/siprop/gnuradio/gnuradio38/lib64/python3/site-packages:/home/siprop/gnuradio/gnuradio38/lib/python3/dist-packages:/home/siprop/gnuradio/gnuradio38/lib64/python3/dist-packages$PYTHONPATH"
+
+Ubuntu 20.04 or new and Raspberry Pi :
+    export PYTHONPATH="/home/siprop/gnuradio/gnuradio38/python:/home/siprop/gnuradio/gnuradio38/lib/python3.7/site-packages:/home/siprop/gnuradio/gnuradio38/lib64/python3.7/site-packages:/home/siprop/gnuradio/gnuradio38/lib/python3.7/dist-packages:/home/siprop/gnuradio/gnuradio38/lib64/python3.7/dist-packages:/home/siprop/gnuradio/gnuradio38/lib/python3/site-packages:/home/siprop/gnuradio/gnuradio38/lib64/python3/site-packages:/home/siprop/gnuradio/gnuradio38/lib/python3/dist-packages:/home/siprop/gnuradio/gnuradio38/lib64/python3/dist-packages$PYTHONPATH"
 
 Fifth, Please build the GNU Radio.   
 
@@ -79,6 +84,15 @@ Second, Please build and setup GR-Quantum library for GNU Radio.
     $ make install
     $ sudo ldconfig
 
+Ubuntu 18.04 : 
+    $ cmake --prefix=/home/siprop/gnuradio/gnuradio38 -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.6m.so -DPYTHON_INCLUDE_DIR=/usr/include/python3.6m -DGNURADIO_RUNTIME_INCLUDE_DIRS=/home/siprop/gnuradio/gnuradio38/include -DGNURADIO_RUNTIME_LIBRARIES=/home/siprop/gnuradio/gnuradio38/lib -DENABLE_DOXYGEN=OFF ../
+
+Ubuntu 20.04 : 
+    $ cmake --prefix=/home/siprop/gnuradio/gnuradio38 -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.7m.so -DPYTHON_INCLUDE_DIR=/usr/include/python3.7m -DGNURADIO_RUNTIME_INCLUDE_DIRS=/home/siprop/gnuradio/gnuradio38/include -DGNURADIO_RUNTIME_LIBRARIES=/home/siprop/gnuradio/gnuradio38/lib -DENABLE_DOXYGEN=OFF ../
+
+Rasbian(Raspberry Pi) : 
+    $ cmake --prefix=/home/siprop/gnuradio/gnuradio38 -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_LIBRARY=/usr/lib/arm-linux-gnueabihf/libpython3.7m.so -DPYTHON_INCLUDE_DIR=/usr/include/python3.7m -DGNURADIO_RUNTIME_INCLUDE_DIRS=/home/siprop/gnuradio/gnuradio38/include -DGNURADIO_RUNTIME_LIBRARIES=/home/siprop/gnuradio/gnuradio38/lib -DENABLE_DOXYGEN=OFF ../
+
 
 ### Run GNU Radio with GR-Quantum
 Load Environment Variables and Run gnuradio-companion.  
@@ -88,8 +102,6 @@ Load Environment Variables and Run gnuradio-companion.
 
 
 ## Dependencies
-GR-Quantum requires GNU Radio version 3.8.0.0 or new with Python 3.6.  
-
 Required dependencies:
 
   * [QuTiP](http://qutip.org/)
@@ -199,4 +211,4 @@ Required dependencies:
   * [1qubit_simulator_compiler.grc](./examples/1qubit_simulator_compiler.grc)
 
 ### 2 Qubits or more Qubits Simulator
-1. Coming May/2020.
+1. We are developing this now.

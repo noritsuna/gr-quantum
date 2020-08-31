@@ -25,12 +25,11 @@
 #endif
 
 #include "API_OpenQL_Source_impl.h"
-#include "gate.h"
 #include <boost/array.hpp>
+#include <boost/thread/thread.hpp>
 #include <cstring>
 #include <limits>
 #include <stdexcept>
-
 
 namespace gr {
   namespace quantum {
@@ -54,8 +53,11 @@ namespace gr {
 
       set_qubit_bitnum(qubit_bitnum);
       set_qubit_reg_num(qreg_num);
+      int qubit_num = qubit_bitnum*qreg_num;
+      d_qubit_bitnum = qubit_bitnum;
+      d_qubit_reg_num = qreg_num;
 
-      if(qubit_bitnum*qreg_num == 1) {
+      if(qubit_num == 1) {
         message_port_register_out(pmt::mp("out"));
       } else {
         for(int i = 0; i < qubit_bitnum*qreg_num; i++) {
@@ -72,16 +74,6 @@ namespace gr {
       d_udp_thread.join();
       delete d_socket;
     }
-
-/*
-    bool
-    API_OpenQL_Source_impl::start()
-    {
-      return block::start();
-    }
-*/
-
-
 
     void
     API_OpenQL_Source_impl::listen(int port)
@@ -116,40 +108,51 @@ namespace gr {
         const IpEndpointName& remoteEndpoint )
     {
         boost::lock_guard<gr::thread::mutex> lock(d_udp_mutex);
+        gate::gate_type_t gate_type = gate::NONE;
         int qubit_num_id = 0;
         int qubit_reg_id = 0;
         int qubit_id = 0;
         int CNOT_cnt = 0;
         std::vector<int> CNOT_junc_point_list;
-        gate::gate_type_t gate_type;
 
         try {
-            // example of parsing single messages. osc::OsckPacketListener
-            // handles the bundle traversal.
-            
-            osc::ReceivedMessage::const_iterator args = m.ArgumentsBegin();
             if( std::strcmp( m.AddressPattern(), "/X" ) == 0 ) {
-              gate_type = gate::X;                
+                gate_type = gate::X;
             } else if( std::strcmp( m.AddressPattern(), "/Y" ) == 0 ) {
-              gate_type = gate::Y;                
+                gate_type = gate::Y;
             } else if( std::strcmp( m.AddressPattern(), "/Z" ) == 0 ) {
-              gate_type = gate::Z;                
-            } else if( std::strcmp( m.AddressPattern(), "/T" ) == 0 ) {
-              gate_type = gate::T;                
+                gate_type = gate::Z;
+            } else if( std::strcmp( m.AddressPattern(), "/CX" ) == 0 ) {
+                gate_type = gate::CX;
+            } else if( std::strcmp( m.AddressPattern(), "/CY" ) == 0 ) {
+                gate_type = gate::CY;
+            } else if( std::strcmp( m.AddressPattern(), "/CZ" ) == 0 ) {
+                gate_type = gate::CZ;
+            } else if( std::strcmp( m.AddressPattern(), "/Mz" ) == 0 ) {
+                gate_type = gate::MZ;
+            } else if( std::strcmp( m.AddressPattern(), "/H" ) == 0 ) {
+                gate_type = gate::H;
             } else if( std::strcmp( m.AddressPattern(), "/S" ) == 0 ) {
-              gate_type = gate::S;                
-            } else if( std::strcmp( m.AddressPattern(), "/INIT" ) == 0 ) {
-              gate_type = gate::INIT;                
+                gate_type = gate::S;
+            } else if( std::strcmp( m.AddressPattern(), "/T" ) == 0 ) {
+                gate_type = gate::T;
+            } else if( std::strcmp( m.AddressPattern(), "/Sdg" ) == 0 ) {
+                gate_type = gate::Sdg;
+            } else if( std::strcmp( m.AddressPattern(), "/Tdg" ) == 0 ) {
+                gate_type = gate::Tdg;
             } else if( std::strcmp( m.AddressPattern(), "/CNOT" ) == 0 ) {
-              gate_type = gate::CNOT;
-            } else if( std::strcmp( m.AddressPattern(), "/hadamard" ) == 0 ) {
-              gate_type = gate::H;                
+                gate_type = gate::CNOT;
+            } else if( std::strcmp( m.AddressPattern(), "/InitZero" ) == 0 ) {
+                gate_type = gate::INIT;
             } else if( std::strcmp( m.AddressPattern(), "/measure" ) == 0 ) {
-              gate_type = gate::RO;                
+                gate_type = gate::RO;
+            } else {
+                std::cout << m.AddressPattern() << "\n";
+                return;
             }
+            osc::ReceivedMessage::const_iterator args = m.ArgumentsBegin();
             qubit_num_id = (args++)->AsInt32();
             qubit_reg_id = (args++)->AsInt32();            
-
             if(gate_type == gate::CNOT) {
               int q_num = 0;
               int q_reg = 0;
@@ -159,35 +162,32 @@ namespace gr {
                 CNOT_junc_point_list[CNOT_cnt++] = ((q_num)*qubit_reg_num()) + q_reg;
               }
             }
+            
+            std::string port_str;
+            if(qubit_bitnum()*qubit_reg_num() == 1) {
+              port_str = "out";
+              qubit_id = 1;
+            } else {
+              int qubit_port_num = ((qubit_num_id)*qubit_reg_num()) + qubit_reg_id;
+              port_str = "out" + std::to_string(qubit_port_num);
+              qubit_id = qubit_port_num + 1;
+            }
+            pmt::pmt_t qubit_ret_msg = pmt::make_dict();
+            qubit_ret_msg = pmt::dict_add(qubit_ret_msg, pmt::from_float(gate::GATE_TYPE), pmt::from_float(gate_type));
+            qubit_ret_msg = pmt::dict_add(qubit_ret_msg, pmt::from_float(gate::QUBIT_ID), pmt::from_float(qubit_id));
+            message_port_pub(pmt::mp(port_str), qubit_ret_msg);
+
+            for(int i = 0; i < CNOT_cnt; i++) {
+              pmt::pmt_t junc_ret_msg = pmt::make_dict();
+              junc_ret_msg = pmt::dict_add(junc_ret_msg, pmt::from_float(gate::GATE_TYPE), pmt::from_float(gate::JUNC));
+              junc_ret_msg = pmt::dict_add(qubit_ret_msg, pmt::from_float(gate::QUBIT_ID), pmt::from_float(qubit_id));
+              port_str = "out" + std::to_string(CNOT_junc_point_list[i]);
+              message_port_pub(pmt::mp(port_str), junc_ret_msg);
+            }
 
         } catch( osc::Exception& e ) {
-            // any parsing errors such as unexpected argument types, or 
-            // missing arguments get thrown as exceptions.
             std::cout << "error while parsing message: "
                 << m.AddressPattern() << ": " << e.what() << "\n";
-            return;
-        }
-
-        std::string port_str;
-        if(qubit_bitnum()*qubit_reg_num() == 1) {
-          port_str = "out";
-          qubit_id = 1;
-        } else {
-          int qubit_port_num = ((qubit_num_id)*qubit_reg_num()) + qubit_reg_id;
-          port_str = "out" + std::to_string(qubit_port_num);
-          qubit_id = qubit_port_num + 1;
-        }
-        pmt::pmt_t qubit_ret_msg = pmt::make_dict();
-        qubit_ret_msg = pmt::dict_add(qubit_ret_msg, pmt::from_float(gate::GATE_TYPE), pmt::from_float(gate_type));
-        qubit_ret_msg = pmt::dict_add(qubit_ret_msg, pmt::from_float(gate::QUBIT_ID), pmt::from_float(qubit_id));
-        message_port_pub(pmt::mp(port_str), qubit_ret_msg);
-
-        for(int i = 0; i < CNOT_cnt; i++) {
-          pmt::pmt_t junc_ret_msg = pmt::make_dict();
-          junc_ret_msg = pmt::dict_add(junc_ret_msg, pmt::from_float(gate::GATE_TYPE), pmt::from_float(gate::JUNC));
-          junc_ret_msg = pmt::dict_add(qubit_ret_msg, pmt::from_float(gate::QUBIT_ID), pmt::from_float(qubit_id));
-          port_str = "out" + std::to_string(CNOT_junc_point_list[i]);
-          message_port_pub(pmt::mp(port_str), junc_ret_msg);
         }
     }
   } /* namespace quantum */

@@ -26,6 +26,7 @@
 
 #include "controllers_gatesParams_impl.h"
 #include <gnuradio/io_signature.h>
+#include <boost/thread/thread.hpp>
 #include <cstring>
 #include <limits>
 
@@ -108,7 +109,54 @@ namespace gr {
     void
     controllers_gatesParams_impl::handle_cmd_msg(pmt::pmt_t msg)
     {
-      message_port_pub(d_port_out, msg);
+      gate* _gate;
+
+      pmt::pmt_t type_value = pmt::dict_ref(msg, pmt::from_float(gate::GATE_TYPE), pmt::PMT_NIL);
+      int type_int = (int)(pmt::to_float(type_value));
+
+      pmt::pmt_t id_value = pmt::dict_ref(msg, pmt::from_float(gate::QUBIT_ID), pmt::PMT_NIL);
+      int id_int = (int)(pmt::to_float(id_value));
+
+      switch(type_int) {
+        case gate::INIT:
+          _gate = INIT;
+          break;
+        case gate::X:
+          _gate = X_gate;
+          break;
+        case gate::Y:
+          _gate = Y_gate;
+          break;
+        case gate::Z:
+          _gate = Z_gate;
+          break;
+        case gate::H:
+          _gate = H_gate;
+          break;
+        case gate::T:
+          _gate = T_gate;
+          break;
+        case gate::S:
+          _gate = S_gate;
+          break;
+        case gate::RO:
+          _gate = RO;
+          break;
+        case gate::CNOT:
+          _gate = CNOT;
+          break;
+        case gate::JUNC:
+          _gate = JUNC;
+          break;
+        default:
+          _gate = INIT;
+          break;
+      }
+      pmt::pmt_t send_msg = pmt::make_dict();
+      _gate->set_qubit_ID(id_int);
+      send_msg = pmt::dict_add(send_msg, pmt::from_float(1), _gate->get_parameters());
+      message_port_pub(d_port_out, send_msg);
+
     }
 
 

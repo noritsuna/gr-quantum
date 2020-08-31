@@ -394,6 +394,7 @@ templates:
         self.${id}.set_INIT_parameters(${INIT_freq}, ${INIT_I_amp}, ${INIT_Q_amp}, ${INIT_I_bw}, ${INIT_Q_bw}, ${INIT_proc_time}, ${samples_per_second})
         self.${id}.set_RO_parameters(${RO_freq}, ${RO_I_amp}, ${RO_Q_amp}, ${RO_I_bw}, ${RO_Q_bw}, ${RO_proc_time}, ${samples_per_second})
         self.${id}.set_CNOT_parameters(${CNOT_freq}, ${CNOT_I_amp}, ${CNOT_Q_amp}, ${CNOT_I_bw}, ${CNOT_Q_bw}, ${CNOT_proc_time}, ${samples_per_second}, ${CNOT_CTRL_mode})
+        self.${id}.set_JUNC_parameters(${JUNC_freq}, ${JUNC_I_amp}, ${JUNC_Q_amp}, ${JUNC_I_bw}, ${JUNC_Q_bw}, ${JUNC_proc_time}, ${samples_per_second}, ${JUNC_CTRL_mode})
     callbacks:
     - set_X_gate_parameters(${X_freq}, ${X_I_amp}, ${X_Q_amp}, ${X_I_bw}, ${X_Q_bw}, ${X_proc_time}, ${samples_per_second})
     - set_Y_gate_parameters(${Y_freq}, ${Y_I_amp}, ${Y_Q_amp}, ${Y_I_bw}, ${Y_Q_bw}, ${Y_proc_time}, ${samples_per_second})
@@ -422,7 +423,7 @@ cpp_templates:
         this->${id}->set_INIT_parameters(${INIT_freq}, ${INIT_I_amp}, ${INIT_Q_amp}, ${INIT_I_bw}, ${INIT_Q_bw}, ${INIT_proc_time}, ${samples_per_second});
         this->${id}->set_RO_parameters(${RO_freq}, ${RO_I_amp}, ${RO_Q_amp}, ${RO_I_bw}, ${RO_Q_bw}, ${RO_proc_time}, ${samples_per_second});
         this->${id}->set_CNOT_parameters(${CNOT_freq}, ${CNOT_I_amp}, ${CNOT_Q_amp}, ${CNOT_I_bw}, ${CNOT_Q_bw}, ${CNOT_proc_time}, ${samples_per_second}, %{CNOT_CTRL_mode});
-        this->$(id)->set_JUNC_parameters(${JUNC_freq}, ${JUNC_I_amp}, ${JUNC_Q_amp}, ${JUNC_I_bw}, ${JUNC_Q_bw}, ${JUNC_proc_time}, ${samples_per_second}, ${JUNC_CTRL_mode});
+        this->${id}->set_JUNC_parameters(${JUNC_freq}, ${JUNC_I_amp}, ${JUNC_Q_amp}, ${JUNC_I_bw}, ${JUNC_Q_bw}, ${JUNC_proc_time}, ${samples_per_second}, ${JUNC_CTRL_mode});
     callbacks:
     - set_X_gate_parameters(${X_freq}, ${X_I_amp}, ${X_Q_amp}, ${X_I_bw}, ${X_Q_bw}, ${X_proc_time}, ${samples_per_second})
     - set_Y_gate_parameters(${Y_freq}, ${Y_I_amp}, ${Y_Q_amp}, ${Y_I_bw}, ${Y_Q_bw}, ${Y_proc_time}, ${samples_per_second})

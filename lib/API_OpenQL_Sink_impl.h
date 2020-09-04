@@ -23,6 +23,8 @@
 #ifndef INCLUDED_GR_QUANTUM_API_OPENQL_SINK_IMPL_H
 #define INCLUDED_GR_QUANTUM_API_OPENQL_SINK_IMPL_H
 
+#include "gate.h"
+#include "qubit.h"
 #include <quantum/API_OpenQL_Sink.h>
 #include <gnuradio/logger.h>
 #include <gnuradio/thread/thread.h>

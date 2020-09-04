@@ -37,14 +37,18 @@ Forth, Please edit setup_env.sh file for GNU Radio.
     ~/gnuradio/gnuradio38/setup_env.sh
 
 > Ubuntu 18.04 : Change "python2.6" paths to "python3.6" in PYTHONPATH.  
-> Ubuntu 20.04 or new and Raspberry Pi : Change "python2.6" paths to "python3.7" in PYTHONPATH.  
+> Ubuntu 20.04 : Change "python2.6" paths to "python3.8" in PYTHONPATH.  
+> Raspberry Pi : Change "python2.6" paths to "python3.7" in PYTHONPATH.  
 > Delete "python2.7" paths in PYTHONPATH.  
 > Add "python3" paths in PYTHONPATH.  
 
 Ubuntu 18.04 : 
     export PYTHONPATH="/home/siprop/gnuradio/gnuradio38/python:/home/siprop/gnuradio/gnuradio38/lib/python3.6/site-packages:/home/siprop/gnuradio/gnuradio38/lib64/python3.6/site-packages:/home/siprop/gnuradio/gnuradio38/lib/python3.6/dist-packages:/home/siprop/gnuradio/gnuradio38/lib64/python3.6/dist-packages:/home/siprop/gnuradio/gnuradio38/lib/python3/site-packages:/home/siprop/gnuradio/gnuradio38/lib64/python3/site-packages:/home/siprop/gnuradio/gnuradio38/lib/python3/dist-packages:/home/siprop/gnuradio/gnuradio38/lib64/python3/dist-packages$PYTHONPATH"
 
-Ubuntu 20.04 or new and Raspberry Pi :
+Ubuntu 20.04 :
+    export PYTHONPATH="/home/siprop/gnuradio/gnuradio38/python:/home/siprop/gnuradio/gnuradio38/lib/python3.8/site-packages:/home/siprop/gnuradio/gnuradio38/lib64/python3.8/site-packages:/home/siprop/gnuradio/gnuradio38/lib/python3.8/dist-packages:/home/siprop/gnuradio/gnuradio38/lib64/python3.8/dist-packages:/home/siprop/gnuradio/gnuradio38/lib/python3/site-packages:/home/siprop/gnuradio/gnuradio38/lib64/python3/site-packages:/home/siprop/gnuradio/gnuradio38/lib/python3/dist-packages:/home/siprop/gnuradio/gnuradio38/lib64/python3/dist-packages$PYTHONPATH"
+
+Raspberry Pi :
     export PYTHONPATH="/home/siprop/gnuradio/gnuradio38/python:/home/siprop/gnuradio/gnuradio38/lib/python3.7/site-packages:/home/siprop/gnuradio/gnuradio38/lib64/python3.7/site-packages:/home/siprop/gnuradio/gnuradio38/lib/python3.7/dist-packages:/home/siprop/gnuradio/gnuradio38/lib64/python3.7/dist-packages:/home/siprop/gnuradio/gnuradio38/lib/python3/site-packages:/home/siprop/gnuradio/gnuradio38/lib64/python3/site-packages:/home/siprop/gnuradio/gnuradio38/lib/python3/dist-packages:/home/siprop/gnuradio/gnuradio38/lib64/python3/dist-packages$PYTHONPATH"
 
 Fifth, Please build the GNU Radio.   
@@ -88,7 +92,7 @@ Ubuntu 18.04 :
     $ cmake --prefix=/home/siprop/gnuradio/gnuradio38 -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.6m.so -DPYTHON_INCLUDE_DIR=/usr/include/python3.6m -DGNURADIO_RUNTIME_INCLUDE_DIRS=/home/siprop/gnuradio/gnuradio38/include -DGNURADIO_RUNTIME_LIBRARIES=/home/siprop/gnuradio/gnuradio38/lib -DENABLE_DOXYGEN=OFF ../
 
 Ubuntu 20.04 : 
-    $ cmake --prefix=/home/siprop/gnuradio/gnuradio38 -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.7m.so -DPYTHON_INCLUDE_DIR=/usr/include/python3.7m -DGNURADIO_RUNTIME_INCLUDE_DIRS=/home/siprop/gnuradio/gnuradio38/include -DGNURADIO_RUNTIME_LIBRARIES=/home/siprop/gnuradio/gnuradio38/lib -DENABLE_DOXYGEN=OFF ../
+    $ cmake --prefix=/home/siprop/gnuradio/gnuradio38 -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.8m.so -DPYTHON_INCLUDE_DIR=/usr/include/python3.8m -DGNURADIO_RUNTIME_INCLUDE_DIRS=/home/siprop/gnuradio/gnuradio38/include -DGNURADIO_RUNTIME_LIBRARIES=/home/siprop/gnuradio/gnuradio38/lib -DENABLE_DOXYGEN=OFF ../
 
 Rasbian(Raspberry Pi) : 
     $ cmake --prefix=/home/siprop/gnuradio/gnuradio38 -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_LIBRARY=/usr/lib/arm-linux-gnueabihf/libpython3.7m.so -DPYTHON_INCLUDE_DIR=/usr/include/python3.7m -DGNURADIO_RUNTIME_INCLUDE_DIRS=/home/siprop/gnuradio/gnuradio38/include -DGNURADIO_RUNTIME_LIBRARIES=/home/siprop/gnuradio/gnuradio38/lib -DENABLE_DOXYGEN=OFF ../

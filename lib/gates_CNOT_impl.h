@@ -23,7 +23,7 @@
 #ifndef INCLUDED_GR_QUANTUM_GATES_CNOT_IMPL_H
 #define INCLUDED_GR_QUANTUM_GATES_CNOT_IMPL_H
 
-#include <gate.h>
+#include "gate.h"
 #include <quantum/gates_CNOT.h>
 #include <gnuradio/logger.h>
 

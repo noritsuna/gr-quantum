@@ -243,4 +243,3 @@ class quantum_controllers_QuTiP_Simulator(gr.basic_block):
 #https://wiki.gnuradio.org/index.php/Guided_Tutorial_Programming_Topics
 #https://wiki.gnuradio.org/index.php/Polymorphic_Types_(PMTs)
         self.message_port_pub(pmt.intern('out'), msg)
-3\

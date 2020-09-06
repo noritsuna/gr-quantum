@@ -27,6 +27,8 @@
 #include "API_OpenQL_Sink_impl.h"
 #include "qubit.h"
 #include <boost/array.hpp>
+#include <stdio.h>
+#include <string.h>
 #include <cstring>
 #include <limits>
 #include <stdexcept>
@@ -137,6 +139,16 @@ namespace gr {
     {
       d_host = host;
       d_port = port;
+    }
+
+    void
+    API_OpenQL_Sink_impl::connect()
+    {
+    }
+
+    void
+    API_OpenQL_Sink_impl::disconnect()
+    {
     }
 
   } /* namespace quantum */

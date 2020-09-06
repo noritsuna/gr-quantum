@@ -23,7 +23,7 @@
 #ifndef INCLUDED_GR_QUANTUM_GATES_JUNCTION_IMPL_H
 #define INCLUDED_GR_QUANTUM_GATES_JUNCTION_IMPL_H
 
-#include <gate.h>
+#include "gate.h"
 #include <quantum/gates_junction.h>
 #include <gnuradio/logger.h>
 

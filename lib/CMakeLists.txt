@@ -46,8 +46,8 @@ list(APPEND quantum_sources
   controllers_gatesParams_impl.cc
   controllers_callback_message_impl.cc
   measurements_Detector_impl.cc
-  API_OpenQL_Source_impl.cc
   API_OpenQL_Sink_impl.cc
+  API_OpenQL_Source_impl.cc
 )
 
 
@@ -60,31 +60,26 @@ endif(NOT quantum_sources)
 set(GR_REQUIRED_COMPONENTS RUNTIME BLOCKS PMT FILTER DIGITAL ANALOG FFT)
 add_library(gnuradio-quantum SHARED ${quantum_sources})
 
-target_include_directories(
-    gnuradio-quantum
-    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
-    PUBLIC $<INSTALL_INTERFACE:include>
-    ${GNURADIO_RUNTIME_INCLUDE_DIRS}
-    ${GNURADIO_ALL_INCLUDE_DIRS}
-    ${Boost_INCLUDE_DIR}
-    ${OSC_INCLUDE_DIRS}
-)
 target_link_libraries(
     gnuradio-quantum
     ${Boost_LIBRARIES}
     ${OSC_LIBRARIES}
-    ${VOLK_LIBRARIES}
-    ${GNURADIO_RUNTIME_LIBRARIES}
-    ${GNURADIO_ALL_LIBRARIES}
-    gnuradio-runtime
-    gnuradio-blocks
-    gnuradio-filter
-    gnuradio-fft
-    gnuradio-analog
-    gnuradio-digital
-    gnuradio-pmt
+    Volk::volk
+    gnuradio::gnuradio-runtime
+    gnuradio::gnuradio-blocks
+    gnuradio::gnuradio-filter
+    gnuradio::gnuradio-fft
+    gnuradio::gnuradio-analog
+    gnuradio::gnuradio-digital
+    gnuradio::gnuradio-pmt
 )
-
+target_include_directories(
+    gnuradio-quantum
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
+    PUBLIC $<INSTALL_INTERFACE:include>
+    ${Boost_INCLUDE_DIR}
+    ${OSC_INCLUDE_DIRS}
+)
 
 set_target_properties(gnuradio-quantum PROPERTIES DEFINE_SYMBOL "gnuradio_quantum_EXPORTS")
 
@@ -98,15 +93,14 @@ endif(APPLE)
 # Install built library files
 ########################################################################
 include(GrMiscUtils)
-#GR_LIBRARY_FOO(gnuradio-quantum)
-GR_LIBRARY_FOO(gnuradio-quantum RUNTIME_COMPONENT "quantum_runtime" DEVEL_COMPONENT "quantum_devel")
+GR_LIBRARY_FOO(gnuradio-quantum)
+#GR_LIBRARY_FOO(gnuradio-quantum RUNTIME_COMPONENT "quantum_runtime" DEVEL_COMPONENT "quantum_devel")
 
 ########################################################################
 # Print summary
 ########################################################################
 message(STATUS "Using install prefix: ${CMAKE_INSTALL_PREFIX}")
 message(STATUS "Building for version: ${VERSION} / ${LIBVER}")
-
 
 ########################################################################
 # Build and register unit test
@@ -131,10 +125,3 @@ foreach(qa_file ${test_quantum_sources})
         ${CMAKE_CURRENT_SOURCE_DIR}/${qa_file}
     )
 endforeach(qa_file)
-
-########################################################################
-# Print summary
-########################################################################
-message(STATUS "Using install prefix: ${CMAKE_INSTALL_PREFIX}")
-message(STATUS "Building for version: ${VERSION} / ${LIBVER}")
-

@@ -40,7 +40,7 @@ install(FILES
     controllers_sync.h
     controllers_callback_message.h
     measurements_Detector.h
-    API_OpenQL_Source.h
     API_OpenQL_Sink.h
+    API_OpenQL_Source.h
     DESTINATION include/quantum
 )

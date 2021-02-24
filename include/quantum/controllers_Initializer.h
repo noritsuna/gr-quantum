@@ -45,6 +45,7 @@ namespace gr {
 
       static sptr make(
                        double qubit_id,
+                       std::string wave_type,
                        double frequency,
                        double I_amplitude,
                        double Q_amplitude,
@@ -52,6 +53,8 @@ namespace gr {
                        double Q_bandwidth,
                        double processing_time,
                        double samples_per_sec,
+                       const char* wave_file_path,
+                       std::string wave_file_type,
                        bool isFeedbackMode=false);
 
     };

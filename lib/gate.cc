@@ -46,6 +46,7 @@ namespace gr {
       d_gate_params_dict = pmt::make_dict();
       d_JUNC_list_PMT = pmt::make_dict();
       set_gate_type(gate_type);
+      set_wave_type(FREQ_COMV);
       set_frequency(frequency);
       set_I_amplitude(I_amplitude);
       set_Q_amplitude(Q_amplitude);
@@ -55,6 +56,23 @@ namespace gr {
       set_sample_rate(samples_per_sec);
       set_qubit_ID(qubit_ID);
       set_ctrl_dc_mode(ctrl_dc_mode);
+      set_wait_time(wait_time);
+    }
+    gate::gate(  gate_type_t gate_type,
+                                 const char* wave_file_path,
+                                 wave_file_type_t wave_file_type,           
+                                 double samples_per_sec,
+                                 int qubit_ID, 
+                                 int wait_time)
+    {
+      d_gate_params_dict = pmt::make_dict();
+      d_JUNC_list_PMT = pmt::make_dict();
+      set_gate_type(gate_type);
+      set_wave_type(ARRAY);
+      set_sample_rate(samples_per_sec);
+      set_wave_file_path(wave_file_path);
+      set_wave_file_type(wave_file_type);
+      set_qubit_ID(qubit_ID);
       set_wait_time(wait_time);
     }
     gate::gate(gate_type_t gate_type,
@@ -89,6 +107,42 @@ namespace gr {
     gate::gate_type_t
     gate::gate_type() {
       return d_gate_type;
+    }
+
+    void
+    gate::set_wave_type(wave_type_t wave_type)
+    {
+      d_wave_type = wave_type;
+      d_gate_params_dict = pmt::dict_add(d_gate_params_dict, pmt::from_float(gate::WAVE_TYPE), pmt::from_double(wave_type));
+    }
+
+    gate::wave_type_t
+    gate::wave_type() {
+      return d_wave_type;
+    }
+
+    void
+    gate::set_wave_file_path(const char* wave_file_path)
+    {
+      d_wave_file_path = wave_file_path;
+      d_gate_params_dict = pmt::dict_add(d_gate_params_dict, pmt::from_float(gate::WAVE_FILE_PATH), pmt::string_to_symbol(wave_file_path));
+    }
+    const char*
+    gate::wave_file_path()
+    {
+      return d_wave_file_path;
+    }
+
+    void
+    gate::set_wave_file_type(wave_file_type_t wave_file_type)
+    {
+      d_wave_file_type = wave_file_type;
+      d_gate_params_dict = pmt::dict_add(d_gate_params_dict, pmt::from_float(gate::WAVE_FILE_TYPE), pmt::from_double(wave_file_type));
+    }
+    gate::wave_file_type_t
+    gate::wave_file_type()
+    {
+      return d_wave_file_type;
     }
 
     void

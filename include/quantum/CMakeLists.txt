@@ -28,6 +28,7 @@ install(FILES
     gates_H.h
     gates_T.h
     gates_S.h
+    gates_waveform.h
     gates_CNOT.h
     gates_junction.h
     controllers_Coprocessor.h
@@ -40,7 +41,7 @@ install(FILES
     controllers_sync.h
     controllers_callback_message.h
     measurements_Detector.h
-    API_OpenQL_Source.h
     API_OpenQL_Sink.h
+    API_OpenQL_Source.h
     DESTINATION include/quantum
 )

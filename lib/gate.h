@@ -26,6 +26,7 @@
 #include <gnuradio/api.h>
 #include <gnuradio/block.h>
 #include <gnuradio/runtime_types.h>
+#include <gnuradio/gr_complex.h>
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/function.hpp>
 #include <boost/foreach.hpp>
@@ -58,7 +59,10 @@ namespace gr {
         PROC_TIME,
         CTRL_DC_MODE,
         QUBIT_ID,
-        WAIT_TIME
+        WAIT_TIME,
+        WAVE_TYPE,
+        WAVE_FILE_PATH,
+        WAVE_FILE_TYPE
       };
       
       enum gate_type_t {
@@ -73,6 +77,9 @@ namespace gr {
         CX,
         CY,
         CZ,
+        RX,
+        RY,
+        RZ,
         MZ,
         Sdg,
         Tdg,
@@ -81,17 +88,32 @@ namespace gr {
         WAIT,
         JUNC,
         JUNC_LIST,
+        WAVEFORM,
         SIM_DATA
       };
-      
+
+      enum wave_type_t {
+        FREQ_COMV = 1,
+        ARRAY
+      };
+
+      enum wave_file_type_t {
+        COMPLEX = 1,
+        FLOAT
+      };
+
       struct gate_param_t {
         gate_type_t type;
+        wave_type_t wave_type;
         double freq;
         double I_amp;
         double Q_amp;
         double I_bw;
         double Q_bw;
         double proc_time;
+
+        std::string wave_file_path;
+        std::string wave_file_type;
 
         bool DC_mode;
         int CTRL_num;
@@ -114,6 +136,9 @@ namespace gr {
       int d_wait_time;
       pmt::pmt_t d_gate_params_dict;
       pmt::pmt_t d_JUNC_list_PMT;
+      wave_type_t d_wave_type;
+      const char* d_wave_file_path;
+      wave_file_type_t d_wave_file_type;
 
     public:        
       gate(gate_type_t gate_type,
@@ -126,6 +151,12 @@ namespace gr {
            double samples_per_sec,
            int qubit_ID = 0,
            bool ctrl_dc_mode = false,
+           int wait_time = 0);
+      gate(gate_type_t gate_type,
+           const char* wave_file_path,
+           wave_file_type_t wave_file_type,           
+           double samples_per_sec,
+           int qubit_ID = 0,
            int wait_time = 0);
       gate(gate_type_t gate_type,
            int qubit_ID);
@@ -182,11 +213,56 @@ namespace gr {
       void set_gate_type(gate_type_t gate_type);
       gate_type_t gate_type();
 
+      void set_wave_type(wave_type_t wave_type);
+      wave_type_t wave_type();
+      static
+      wave_type_t
+      convert_wave_type(std::string wave_type)
+      {
+        char s;
+        wave_type.copy(&s, 1);
+        switch(s){
+          case 'f':
+            return FREQ_COMV;
+          case 'a':
+            return ARRAY;
+        }
+      }
+
+      void set_wave_file_path(const char* wave_file_path);
+      const char* wave_file_path();
+
+      void set_wave_file_type(wave_file_type_t wave_file_type);
+      wave_file_type_t wave_file_type();
+      static
+      wave_file_type_t
+      convert_wave_file_type(std::string wave_file_type)
+      {
+        char s;
+        wave_file_type.copy(&s, 1);
+        switch(s){
+          case 'f':
+            return FLOAT;
+          case 'c':
+            return COMPLEX;
+        }
+      }
+      static
+      int
+      convert_wave_file_type2size(wave_file_type_t wave_file_type)
+      {
+        switch(wave_file_type){
+          case 'f':
+            return sizeof(float);
+          case 'c':
+            return sizeof(gr_complex);
+        }
+      }
+
       void set_JUNC_list(std::queue<CTRL_junction_relation_t> junc_list);
       pmt::pmt_t JUNC_list_PMT();
 
-      pmt::pmt_t get_parameters();
-      
+      pmt::pmt_t get_parameters();      
     };
 
   } /* namespace quantum */

@@ -88,6 +88,9 @@ namespace gr {
       blocks::float_to_complex::sptr readout_IQ_mixer;
       controllers_callback_message::sptr callback_message_port;
 
+      blocks::file_source::sptr source_file;
+      blocks::throttle::sptr source_file_throttle;
+
       boost::mutex sleep_mutex;
       boost::condition_variable sleep_condition;
       gr::thread::mutex d_cmd_mutex;

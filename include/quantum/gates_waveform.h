@@ -20,8 +20,8 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef INCLUDED_GR_QUANTUM_GATES_X_H
-#define INCLUDED_GR_QUANTUM_GATES_X_H
+#ifndef INCLUDED_GR_QUANTUM_GATES_WAVEFORM_H
+#define INCLUDED_GR_QUANTUM_GATES_WAVEFORM_H
 
 #include <quantum/api.h>
 #include <gnuradio/block.h>
@@ -31,7 +31,7 @@ namespace gr {
   namespace quantum {
 
     /*!
-     * \brief X gate
+     * \brief WaveForm gate
      *
      * \ingroup gates_blk
      *
@@ -39,18 +39,12 @@ namespace gr {
      * input: one messages; output: one message
      *
      */
-    class QUANTUM_API gates_X : virtual public block
+    class QUANTUM_API gates_waveform : virtual public block
     {
     public:
-      typedef boost::shared_ptr<gates_X> sptr;
+      typedef boost::shared_ptr<gates_waveform> sptr;
 
-      static sptr make(std::string wave_type,
-                       double frequency,
-                       double I_amplitude,
-                       double Q_amplitude,
-                       double I_bandwidth,
-                       double Q_bandwidth,
-                       double processing_time,
+      static sptr make(
                        double samples_per_sec,
                        const char* wave_file_path,
                        std::string wave_file_type);
@@ -58,4 +52,4 @@ namespace gr {
   } /* namespace quantum */
 } /* namespace gr */
 
-#endif /* INCLUDED_GR_QUANTUM_GATES_X_H */
+#endif /* INCLUDED_GR_QUANTUM_GATES_WAVEFORM_H */

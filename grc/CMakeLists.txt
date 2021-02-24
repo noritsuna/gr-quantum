@@ -18,4 +18,3 @@
 # Boston, MA 02110-1301, USA.
 file(GLOB yml_files "*.yml")
 install(FILES ${yml_files} DESTINATION share/gnuradio/grc/blocks)
-#install(FILES ${yml_files} DESTINATION share/gnuradio/grc/blocks COMPONENT "quantum_python")

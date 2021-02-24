@@ -20,18 +20,18 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef INCLUDED_GR_QUANTUM_GATES_Z_IMPL_H
-#define INCLUDED_GR_QUANTUM_GATES_Z_IMPL_H
+#ifndef INCLUDED_GR_QUANTUM_GATES_WAVEFORM_IMPL_H
+#define INCLUDED_GR_QUANTUM_GATES_WAVEFORM_IMPL_H
 
 #include <gnuradio/logger.h>
 #include "gate.h"
-#include <quantum/gates_Z.h>
+#include <quantum/gates_waveform.h>
 #include <gnuradio/logger.h>
 
 namespace gr {
   namespace quantum {
 
-    class gates_Z_impl : public gates_Z
+    class gates_waveform_impl : public gates_waveform
     {
     private:
       gate *d_gate;
@@ -42,17 +42,11 @@ namespace gr {
       gr::logger_ptr d_debug_logger;
 
     public:
-      gates_Z_impl(std::string wave_type,
-                   double frequency,
-                   double I_amplitude,
-                   double Q_amplitude,
-                   double I_bandwidth,
-                   double Q_bandwidth,
-                   double processing_time,
+      gates_waveform_impl(
                    double samples_per_sec,
                    const char* wave_file_path,
                    std::string wave_file_type);
-      ~gates_Z_impl();
+      ~gates_waveform_impl();
 
       // Overloading gr::block::start to reset timer
       bool start();
@@ -63,4 +57,4 @@ namespace gr {
   } /* namespace quantum */
 } /* namespace gr */
 
-#endif /* INCLUDED_GR_QUANTUM_GATES_Z_IMPL_H */
+#endif /* INCLUDED_GR_QUANTUM_GATES_WAVEFORM_IMPL_H */

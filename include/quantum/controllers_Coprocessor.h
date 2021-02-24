@@ -30,6 +30,8 @@
 #include <gnuradio/analog/sig_source.h>
 #include <gnuradio/blocks/float_to_complex.h>
 #include <gnuradio/blocks/add_blk.h>
+#include <gnuradio/blocks/file_source.h>
+#include <gnuradio/blocks/throttle.h>
 
 namespace gr {
   namespace quantum {

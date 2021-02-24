@@ -46,24 +46,6 @@ set(VERSION_MAJOR 1)
 set(VERSION_API    0)
 set(VERSION_ABI 0)
 set(VERSION_PATCH git)
-set(GR_GIT_COUNT compat-xxx)
-set(GR_GIT_HASH xunknown)
-
-# Minimum dependency versions for central dependencies:
-set(GR_BOOST_MIN_VERSION "1.53")
-set(GR_SWIG_MIN_VERSION "3.0.8")
-set(GR_CMAKE_MIN_VERSION "3.5.1")
-set(GR_MAKO_MIN_VERSION "0.4.2")
-set(GR_PYTHON_MIN_VERSION "2.7.6")
-set(GR_PYTHON3_MIN_VERSION "3.6.5")
-set(GCC_MIN_VERSION "4.8.4")
-set(CLANG_MIN_VERSION "3.4.0")
-set(APPLECLANG_MIN_VERSION "500")
-set(MSVC_MIN_VERSION "1800")
-
-# Set cmake policies.
-# This will suppress developer warnings during the cmake process that can occur
-# if a newer cmake version than the minimum is used.
 
 cmake_policy(SET CMP0011 NEW)
 
@@ -104,27 +86,22 @@ ENDIF()
 ########################################################################
 # Install directories
 ########################################################################
-find_package(Gnuradio "3.8" REQUIRED)
+find_package(Gnuradio "3.8" REQUIRED COMPONENTS runtime blocks analog filter fft digital pmt)
 include(GrVersion)
 include(GrBoostQuantum)
 
 include(GrPlatform) #define LIB_SUFFIX
-set(GR_RUNTIME_DIR      bin)
-set(GR_LIBRARY_DIR      lib${LIB_SUFFIX})
-set(GR_INCLUDE_DIR      include/quantum)
-set(GR_DATA_DIR         share)
-set(GR_PKG_DATA_DIR     ${GR_DATA_DIR}/${CMAKE_PROJECT_NAME})
-set(GR_DOC_DIR          ${GR_DATA_DIR}/doc)
-set(GR_PKG_DOC_DIR      ${GR_DOC_DIR}/${CMAKE_PROJECT_NAME})
-set(GR_CONF_DIR         etc)
-set(GR_PKG_CONF_DIR     ${GR_CONF_DIR}/${CMAKE_PROJECT_NAME}/conf.d)
-set(GR_LIBEXEC_DIR      libexec)
-set(GR_PKG_LIBEXEC_DIR  ${GR_LIBEXEC_DIR}/${CMAKE_PROJECT_NAME})
-set(GRC_BLOCKS_DIR      ${GR_PKG_DATA_DIR}/grc/blocks)
+
 if(NOT CMAKE_MODULES_DIR)
   set(CMAKE_MODULES_DIR lib${LIB_SUFFIX}/cmake)
 endif(NOT CMAKE_MODULES_DIR)
-set(GR_CMAKE_DIR        ${CMAKE_MODULES_DIR}/gnuradio)
+
+set(GR_INCLUDE_DIR      include/quantum)
+set(GR_CMAKE_DIR        ${CMAKE_MODULES_DIR}/quantum)
+set(GR_PKG_DATA_DIR     ${GR_DATA_DIR}/${CMAKE_PROJECT_NAME})
+set(GR_PKG_DOC_DIR      ${GR_DOC_DIR}/${CMAKE_PROJECT_NAME})
+set(GR_PKG_CONF_DIR     ${GR_CONF_DIR}/${CMAKE_PROJECT_NAME}/conf.d)
+set(GR_PKG_LIBEXEC_DIR  ${GR_LIBEXEC_DIR}/${CMAKE_PROJECT_NAME})
 
 ########################################################################
 # On Apple only, set install name and use rpath correctly, if not already set
@@ -158,20 +135,7 @@ endif()
 ########################################################################
 # Find gnuradio build dependencies
 ########################################################################
-find_package(CppUnit)
 find_package(Doxygen)
-
-# Search for GNU Radio and its components and versions. Add any
-# components required to the list of GR_REQUIRED_COMPONENTS (in all
-# caps such as FILTER or FFT) and change the version to the minimum
-# API compatible version required.
-set(GR_REQUIRED_COMPONENTS RUNTIME BLOCKS PMT FILTER DIGITAL ANALOG FFT)
-list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_SOURCE_DIR}/cmake/Modules)
-include(GrVersion)
-
-if(NOT CPPUNIT_FOUND)
-    message(FATAL_ERROR "CppUnit required to compile quantum")
-endif()
 
 ########################################################################
 # Setup doxygen option
@@ -181,31 +145,6 @@ if(DOXYGEN_FOUND)
 else(DOXYGEN_FOUND)
 	option(ENABLE_DOXYGEN "Build docs using Doxygen" OFF)
 endif(DOXYGEN_FOUND)
-
-
-########################################################################
-# Setup the include and linker paths
-########################################################################
-include_directories(
-    ${CMAKE_SOURCE_DIR}/lib
-    ${CMAKE_SOURCE_DIR}/include
-    ${CMAKE_BINARY_DIR}/lib
-    ${CMAKE_BINARY_DIR}/include
-    ${Boost_INCLUDE_DIRS}
-    ${CPPUNIT_INCLUDE_DIRS}
-    ${GNURADIO_RUNTIME_INCLUDE_DIRS}
-    ${GNURADIO_ALL_INCLUDE_DIRS}
-)
-
-link_directories(
-    ${Boost_LIBRARY_DIRS}
-    ${CPPUNIT_LIBRARY_DIRS}
-    ${GNURADIO_RUNTIME_LIBRARIES}
-    ${GNURADIO_ALL_LIBRARIES}
-)
-# Set component parameters
-set(GR_QUANTUM_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE INTERNAL "" FORCE)
-set(GR_QUANTUM_SWIG_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/swig CACHE INTERNAL "" FORCE)
 
 ########################################################################
 # Create uninstall target

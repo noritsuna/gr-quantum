@@ -43,15 +43,17 @@ namespace gr {
     public:
       typedef boost::shared_ptr<gates_CNOT> sptr;
 
-      static sptr make(bool DC_mode,
+      static sptr make(std::string wave_type,
+                       bool DC_mode,
                        double frequency,
                        double I_amplitude,
                        double Q_amplitude,
                        double I_bandwidth,
                        double Q_bandwidth,
                        double processing_time,
-                       double samples_per_sec);
-
+                       double samples_per_sec,
+                       const char* wave_file_path,
+                       std::string wave_file_type);
     };
 
   } /* namespace quantum */

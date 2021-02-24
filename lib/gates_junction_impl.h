@@ -23,7 +23,7 @@
 #ifndef INCLUDED_GR_QUANTUM_GATES_JUNCTION_IMPL_H
 #define INCLUDED_GR_QUANTUM_GATES_JUNCTION_IMPL_H
 
-#include <gate.h>
+#include "gate.h"
 #include <quantum/gates_junction.h>
 #include <gnuradio/logger.h>
 
@@ -49,14 +49,17 @@ namespace gr {
       const float QUANTUM_JUNC_AMP_RATE = 2.0f;
 
     public:
-      gates_junction_impl(bool DC_mode,
+      gates_junction_impl(std::string wave_type,
+                   bool DC_mode,
                    double frequency,
                    double I_amplitude,
                    double Q_amplitude,
                    double I_bandwidth,
                    double Q_bandwidth,
                    double processing_time,
-                   double samples_per_sec);
+                   double samples_per_sec,
+                   const char* wave_file_path,
+                   std::string wave_file_type);
       ~gates_junction_impl();
 
       // Overloading gr::block::start to reset timer

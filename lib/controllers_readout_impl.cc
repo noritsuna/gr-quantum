@@ -34,35 +34,40 @@ namespace gr {
   namespace quantum {
 
     controllers_readout::sptr
-    controllers_readout::make(
+    controllers_readout::make(std::string wave_type,
                   double frequency,
                   double I_amplitude,
                   double Q_amplitude,
                   double I_bandwidth,
                   double Q_bandwidth,
                   double processing_time,
-                  double samples_per_sec)
-
+                  double samples_per_sec,
+                  const char* wave_file_path,
+                  std::string wave_file_type)
     {
       return gnuradio::get_initial_sptr
-        (new controllers_readout_impl(
+        (new controllers_readout_impl(wave_type,
                           frequency,
                           I_amplitude,
                           Q_amplitude,
                           I_bandwidth,
                           Q_bandwidth,
                           processing_time,
-                          samples_per_sec));
+                          samples_per_sec,
+                          wave_file_path,
+                          wave_file_type));
     }
 
-    controllers_readout_impl::controllers_readout_impl(
+    controllers_readout_impl::controllers_readout_impl(  std::string wave_type,
                                  double frequency,
                                  double I_amplitude,
                                  double Q_amplitude,
                                  double I_bandwidth,
                                  double Q_bandwidth,
                                  double processing_time, 
-                                 double samples_per_second)
+                                 double samples_per_second,
+                                 const char* wave_file_path,
+                                 std::string wave_file_type)
       : block("controllers_readout",
                       io_signature::make(0, 0, 0),
                       io_signature::make(0, 0, 0)),
@@ -71,7 +76,18 @@ namespace gr {
     {
       configure_default_loggers(d_logger, d_debug_logger, "Readout");
 
-      RO = new gate(gate::RO, frequency, I_amplitude, Q_amplitude, I_bandwidth, Q_bandwidth, processing_time, samples_per_second);
+      switch (gate::convert_wave_type(wave_type))
+      {
+      case gate::FREQ_COMV:
+        RO = new gate(gate::RO, frequency, I_amplitude, Q_amplitude, I_bandwidth, Q_bandwidth, processing_time, samples_per_second);
+        break;
+      case gate::ARRAY:
+        RO = new gate(gate::RO, wave_file_path, gate::convert_wave_file_type(wave_file_type), samples_per_second);
+        break;
+      default:
+        RO = new gate(gate::RO, frequency, I_amplitude, Q_amplitude, I_bandwidth, Q_bandwidth, processing_time, samples_per_second);
+        break;
+      }
       
       message_port_register_out(d_port_out);
       message_port_register_in(d_port_in);

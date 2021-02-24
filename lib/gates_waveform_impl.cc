@@ -24,90 +24,60 @@
 #include "config.h"
 #endif
 
-#include "gates_Y_impl.h"
+#include "gates_waveform_impl.h"
 #include <gnuradio/io_signature.h>
 #include <cstring>
 #include <boost/thread/thread.hpp>
 #include <limits>
-#include <gnuradio/logger.h>
 
 namespace gr {
   namespace quantum {
 
-    gates_Y::sptr
-    gates_Y::make(std::string wave_type,
-                  double frequency,
-                  double I_amplitude,
-                  double Q_amplitude,
-                  double I_bandwidth,
-                  double Q_bandwidth,
-                  double processing_time,
+    gates_waveform::sptr
+    gates_waveform::make(
                   double samples_per_sec,
                   const char* wave_file_path,
                   std::string wave_file_type)
     {
       return gnuradio::get_initial_sptr
-        (new gates_Y_impl(wave_type,
-                          frequency,
-                          I_amplitude,
-                          Q_amplitude,
-                          I_bandwidth,
-                          Q_bandwidth,
-                          processing_time,
+        (new gates_waveform_impl(
                           samples_per_sec,
                           wave_file_path,
                           wave_file_type));
     }
 
-    gates_Y_impl::gates_Y_impl(  std::string wave_type,
-                                 double frequency,
-                                 double I_amplitude,
-                                 double Q_amplitude,
-                                 double I_bandwidth,
-                                 double Q_bandwidth,
-                                 double processing_time, 
+    gates_waveform_impl::gates_waveform_impl(
                                  double samples_per_second,
                                  const char* wave_file_path,
                                  std::string wave_file_type)
-      : block("gates_Y",
+      : block("gates_waveform",
                       io_signature::make(0, 0, 0),
                       io_signature::make(0, 0, 0)),
       d_port_out(pmt::mp("out")),
       d_port_in(pmt::mp("in"))
     {
-      configure_default_loggers(d_logger, d_debug_logger, "Y Gate");
+      configure_default_loggers(d_logger, d_debug_logger, "Waveform Gate");
 
-      switch (gate::convert_wave_type(wave_type))
-      {
-      case gate::FREQ_COMV:
-        d_gate = new gate(gate::Y, frequency, I_amplitude, Q_amplitude, I_bandwidth, Q_bandwidth, processing_time, samples_per_second);
-        break;
-      case gate::ARRAY:
-        d_gate = new gate(gate::Y, wave_file_path, gate::convert_wave_file_type(wave_file_type), samples_per_second);
-        break;
-      default:
-        d_gate = new gate(gate::Y, frequency, I_amplitude, Q_amplitude, I_bandwidth, Q_bandwidth, processing_time, samples_per_second);
-        break;
-      }
+      d_gate = new gate(gate::WAVEFORM, wave_file_path, gate::convert_wave_file_type(wave_file_type), samples_per_second);
 
       message_port_register_out(d_port_out);
       message_port_register_in(d_port_in);
-      set_msg_handler(d_port_in, boost::bind(&gates_Y_impl::handle_cmd_msg, this, _1));
+      set_msg_handler(d_port_in, boost::bind(&gates_waveform_impl::handle_cmd_msg, this, _1));
     }
 
-    gates_Y_impl::~gates_Y_impl()
+    gates_waveform_impl::~gates_waveform_impl()
     {
        delete d_gate;
     }
 
     bool
-    gates_Y_impl::start()
+    gates_waveform_impl::start()
     {
       return block::start();
     }
 
     void
-    gates_Y_impl::handle_cmd_msg(pmt::pmt_t msg)
+    gates_waveform_impl::handle_cmd_msg(pmt::pmt_t msg)
     {
 
       msg = pmt::dict_add(msg, pmt::from_float(pmt::length(msg)+1), d_gate->get_parameters());

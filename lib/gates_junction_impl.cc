@@ -34,35 +34,43 @@ namespace gr {
   namespace quantum {
 
     gates_junction::sptr
-    gates_junction::make(bool DC_mode,
+    gates_junction::make(std::string wave_type,
+                  bool DC_mode,
                   double frequency,
                   double I_amplitude,
                   double Q_amplitude,
                   double I_bandwidth,
                   double Q_bandwidth,
                   double processing_time,
-                  double samples_per_sec)
-
+                  double samples_per_sec,
+                  const char* wave_file_path,
+                  std::string wave_file_type)
     {
       return gnuradio::get_initial_sptr
-        (new gates_junction_impl(DC_mode,
+        (new gates_junction_impl(wave_type,
+                          DC_mode,
                           frequency,
                           I_amplitude,
                           Q_amplitude,
                           I_bandwidth,
                           Q_bandwidth,
                           processing_time,
-                          samples_per_sec));
+                          samples_per_sec,
+                          wave_file_path,
+                          wave_file_type));
     }
 
-    gates_junction_impl::gates_junction_impl(bool DC_mode,
+    gates_junction_impl::gates_junction_impl(std::string wave_type,
+                                 bool DC_mode,
                                  double frequency,
                                  double I_amplitude,
                                  double Q_amplitude,
                                  double I_bandwidth,
                                  double Q_bandwidth,
                                  double processing_time, 
-                                 double samples_per_second)
+                                 double samples_per_second,
+                                 const char* wave_file_path,
+                                 std::string wave_file_type)
       : block("gates_junction",
                       io_signature::make(0, 0, 0),
                       io_signature::make(0, 0, 0)),
@@ -72,7 +80,18 @@ namespace gr {
     {
       configure_default_loggers(d_logger, d_debug_logger, "Junction Gate");
 
-      JUNC = new gate(gate::JUNC, frequency, I_amplitude, Q_amplitude, I_bandwidth, Q_bandwidth, processing_time, samples_per_second);
+      switch (gate::convert_wave_type(wave_type))
+      {
+      case gate::FREQ_COMV:
+        JUNC = new gate(gate::JUNC, frequency, I_amplitude, Q_amplitude, I_bandwidth, Q_bandwidth, processing_time, samples_per_second);
+        break;
+      case gate::ARRAY:
+        JUNC = new gate(gate::JUNC, wave_file_path, gate::convert_wave_file_type(wave_file_type), samples_per_second);
+        break;
+      default:
+        JUNC = new gate(gate::JUNC, frequency, I_amplitude, Q_amplitude, I_bandwidth, Q_bandwidth, processing_time, samples_per_second);
+        break;
+      }
       JUNC->set_ctrl_dc_mode(DC_mode);
 
       message_port_register_out(d_port_out);

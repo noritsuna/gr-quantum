@@ -43,27 +43,27 @@ namespace gr {
     public:
       typedef boost::shared_ptr<controllers_gatesParams> sptr;
 
-      static sptr make(double qubit_id);
+      static sptr make(double qubit_id, std::string wave_type);
 
-      virtual void set_INIT_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec) = 0;
+      virtual void set_INIT_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec, const char* wave_file_path, std::string wave_file_type) = 0;
 
-      virtual void set_RO_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec) = 0;
+      virtual void set_RO_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec, const char* wave_file_path, std::string wave_file_type) = 0;
 
-      virtual void set_X_gate_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec) = 0;
+      virtual void set_X_gate_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec, const char* wave_file_path, std::string wave_file_type) = 0;
 
-      virtual void set_Y_gate_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec) = 0;
+      virtual void set_Y_gate_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec, const char* wave_file_path, std::string wave_file_type) = 0;
 
-      virtual void set_Z_gate_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec) = 0;
+      virtual void set_Z_gate_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec, const char* wave_file_path, std::string wave_file_type) = 0;
 
-      virtual void set_H_gate_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec) = 0;
+      virtual void set_H_gate_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec, const char* wave_file_path, std::string wave_file_type) = 0;
 
-      virtual void set_T_gate_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec) = 0;
+      virtual void set_T_gate_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec, const char* wave_file_path, std::string wave_file_type) = 0;
 
-      virtual void set_S_gate_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec) = 0;
+      virtual void set_S_gate_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec, const char* wave_file_path, std::string wave_file_type) = 0;
 
-      virtual void set_CNOT_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec, bool ctrl_dc_mode = false) = 0;
+      virtual void set_CNOT_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec, const char* wave_file_path, std::string wave_file_type, bool ctrl_dc_mode = false) = 0;
 
-      virtual void set_JUNC_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec, bool ctrl_dc_mode = false) = 0;
+      virtual void set_JUNC_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec, const char* wave_file_path, std::string wave_file_type, bool ctrl_dc_mode = false) = 0;
 
     };
 

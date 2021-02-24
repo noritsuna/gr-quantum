@@ -24,7 +24,7 @@
 #include "config.h"
 #endif
 
-#include <qubit.h>
+#include "qubit.h"
 #include <cstring>
 #include <limits>
 

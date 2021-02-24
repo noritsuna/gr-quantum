@@ -13,30 +13,54 @@ parameters:
     options: ['True', 'False']
     option_labels: ['Yes', 'No']
     hide: part
+-   id: GATE_type
+    label: Gate Type
+    dtype: enum
+    options: [Frequency, Array]
+    option_attributes:
+        mode: [f, a]
 -   id: freq
     label: Frequency
     dtype: real
     default: 1000
+    hide: ${ ('part' if  str(GATE_type.mode) == 'f' else 'all') }
 -   id: I_amp
     label: I Amplitude
     dtype: float
     default: 1.0
+    hide: ${ ('part' if  str(GATE_type.mode) == 'f' else 'all') }
 -   id: Q_amp
     label: Q Amplitude
     dtype: float
     default: 1.0
+    hide: ${ ('part' if  str(GATE_type.mode) == 'f' else 'all') }
 -   id: I_bw
     label: I Bandwidth
     dtype: real
     default: 10
+    hide: ${ ('part' if  str(GATE_type.mode) == 'f' else 'all') }
 -   id: Q_bw
     label: Q Bandwidth
     dtype: real
     default: 10
+    hide: ${ ('part' if  str(GATE_type.mode) == 'f' else 'all') }
 -   id: proc_time
     label: Processing Time(ns)
     dtype: real
     default: 1000000
+    hide: ${ ('part' if  str(GATE_type.mode) == 'f' else 'all') }
+-   id: WAVE_FILE_PATH
+    label: Wave File Path
+    dtype: file_open
+    hide: ${ ('part' if  str(GATE_type.mode) == 'a' else 'all') }
+-   id: WAVE_type
+    label: Wave Type
+    dtype: enum
+    options: [complex, float]
+    option_attributes:
+        const_type: [complex, real]
+        fcn: [c, f]
+    hide: ${ ('part' if  str(GATE_type.mode) == 'a' else 'all') }
 -   id: samples_per_second
     label: Sample Rate
     dtype: real
@@ -58,12 +82,12 @@ outputs:
 
 templates:
     imports: import quantum
-    make: quantum.controllers_Initializer(${qubit_id}, ${freq}, ${I_amp}, ${Q_amp}, ${I_bw}, ${Q_bw}, ${proc_time}, ${samples_per_second}, ${isFeedbackMode})
+    make: quantum.controllers_Initializer(${qubit_id}, ${GATE_type.mode}, ${freq}, ${I_amp}, ${Q_amp}, ${I_bw}, ${Q_bw}, ${proc_time}, ${samples_per_second}, ${WAVE_FILE_PATH}, ${WAVE_type.fcn}, ${isFeedbackMode})
 
 cpp_templates:
     includes: [ '#include <quantum/controllers_Initializer.h>' ]
     declarations: 'quantum::controllers_Initializer::sptr ${id};'
-    make: 'this->${id} = quantum::controllers_Initializer::make(${qubit_id}, ${freq}, ${I_amp}, ${Q_amp}, ${I_bw}, ${Q_bw}, ${proc_time}, ${samples_per_second}, ${isFeedbackMode});'
+    make: 'this->${id} = quantum::controllers_Initializer::make(${qubit_id}, ${GATE_type.mode}, ${freq}, ${I_amp}, ${Q_amp}, ${I_bw}, ${Q_bw}, ${proc_time}, ${samples_per_second}, ${WAVE_FILE_PATH}, ${WAVE_type.fcn}, ${isFeedbackMode});'
     link: ['gnuradio-quantum']
     translations:
         "'": '"'

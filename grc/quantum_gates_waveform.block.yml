@@ -1,0 +1,46 @@
+id: quantum_gates_waveform
+label: Gate Wave Form
+flags: [ 'python', 'cpp' ]
+
+parameters:
+-   id: WAVE_FILE_PATH
+    label: Wave File Path
+    dtype: file_open
+-   id: WAVE_type
+    label: Wave Type
+    dtype: enum
+    options: [complex, float]
+    option_attributes:
+        const_type: [complex, real]
+        fcn: [c, f]
+-   id: samples_per_second
+    label: Sample Rate
+    dtype: real
+    default: samp_rate
+
+inputs:
+-   domain: message
+    id: in
+
+outputs:
+-   domain: message
+    id: out
+
+templates:
+    imports: import quantum
+    make: quantum.gates_waveform(${samples_per_second}, ${WAVE_FILE_PATH}, ${WAVE_type.fcn})
+
+cpp_templates:
+    includes: [ '#include <quantum/gates_waveform.h>' ]
+    declarations: 'quantum::gates_waveform::sptr ${id};'
+    make: 'this->${id} = quantum::gates_waveform::make(${samples_per_second}, ${WAVE_FILE_PATH}, ${WAVE_type.fcn});'
+    link: ['gnuradio-quantum']
+    translations:
+        "'": '"'
+        'True': 'true'
+        'False': 'false'
+
+documentation: |-
+    Please input these parameters into Coprocessor Block, if you want to use same parameters for all gate.
+
+file_format: 1

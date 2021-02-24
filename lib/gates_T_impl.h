@@ -39,13 +39,16 @@ namespace gr {
       const pmt::pmt_t d_port_in;
 
     public:
-      gates_T_impl(double frequency,
+      gates_T_impl(std::string wave_type,
+                   double frequency,
                    double I_amplitude,
                    double Q_amplitude,
                    double I_bandwidth,
                    double Q_bandwidth,
                    double processing_time,
-                   double samples_per_sec);
+                   double samples_per_sec,
+                   const char* wave_file_path,
+                   std::string wave_file_type);
       ~gates_T_impl();
 
       // Overloading gr::block::start to reset timer

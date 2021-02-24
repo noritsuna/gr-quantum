@@ -47,8 +47,8 @@ namespace gr {
       gr::logger_ptr d_debug_logger;
 
     public:
-      controllers_Initializer_impl(
-                   double qubit_id,
+      controllers_Initializer_impl(double qubit_id,
+                   std::string wave_type,
                    double frequency,
                    double I_amplitude,
                    double Q_amplitude,
@@ -56,6 +56,8 @@ namespace gr {
                    double Q_bandwidth,
                    double processing_time,
                    double samples_per_sec,
+                   const char* wave_file_path,
+                   std::string wave_file_type,
                    bool isFeedbackMode=false);
       ~controllers_Initializer_impl();
 

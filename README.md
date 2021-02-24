@@ -84,7 +84,7 @@ Second, Please build and setup GR-Quantum library for GNU Radio.
     $ cd gr-quantum
     $ mkdir build
     $ cd build
-    $ cmake --prefix=/home/siprop/gnuradio/gnuradio38 -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.6m.so -DPYTHON_INCLUDE_DIR=/usr/include/python3.6m -DGNURADIO_RUNTIME_INCLUDE_DIRS=/home/siprop/gnuradio/gnuradio38/include -DGNURADIO_RUNTIME_LIBRARIES=/home/siprop/gnuradio/gnuradio38/lib -DENABLE_DOXYGEN=OFF ../
+    $ cmake [Each OS's options]
     $ make install
     $ sudo ldconfig
 
@@ -92,7 +92,7 @@ Ubuntu 18.04 :
     $ cmake --prefix=/home/siprop/gnuradio/gnuradio38 -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.6m.so -DPYTHON_INCLUDE_DIR=/usr/include/python3.6m -DGNURADIO_RUNTIME_INCLUDE_DIRS=/home/siprop/gnuradio/gnuradio38/include -DGNURADIO_RUNTIME_LIBRARIES=/home/siprop/gnuradio/gnuradio38/lib -DENABLE_DOXYGEN=OFF ../
 
 Ubuntu 20.04 : 
-    $ cmake --prefix=/home/siprop/gnuradio/gnuradio38 -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.8m.so -DPYTHON_INCLUDE_DIR=/usr/include/python3.8m -DGNURADIO_RUNTIME_INCLUDE_DIRS=/home/siprop/gnuradio/gnuradio38/include -DGNURADIO_RUNTIME_LIBRARIES=/home/siprop/gnuradio/gnuradio38/lib -DENABLE_DOXYGEN=OFF ../
+    $ cmake --prefix=/home/siprop/gnuradio/gnuradio38 -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.8.so -DPYTHON_INCLUDE_DIR=/usr/include/python3.8 -DGNURADIO_RUNTIME_INCLUDE_DIRS=/home/siprop/gnuradio/gnuradio38/include -DGNURADIO_RUNTIME_LIBRARIES=/home/siprop/gnuradio/gnuradio38/lib -DENABLE_DOXYGEN=OFF ../
 
 Rasbian(Raspberry Pi) : 
     $ cmake --prefix=/home/siprop/gnuradio/gnuradio38 -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_LIBRARY=/usr/lib/arm-linux-gnueabihf/libpython3.7m.so -DPYTHON_INCLUDE_DIR=/usr/include/python3.7m -DGNURADIO_RUNTIME_INCLUDE_DIRS=/home/siprop/gnuradio/gnuradio38/include -DGNURADIO_RUNTIME_LIBRARIES=/home/siprop/gnuradio/gnuradio38/lib -DENABLE_DOXYGEN=OFF ../

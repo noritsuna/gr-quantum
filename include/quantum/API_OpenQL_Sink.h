@@ -58,12 +58,6 @@ namespace gr {
       */
       virtual void make_socket(const std::string& host, int port) = 0;
       virtual void connect() = 0;
-
-      /*! \brief Send zero-length packet (if eof is requested) then stop sending
-      *
-      * Zero-byte packets can be interpreted as EOF by gr_udp_source.
-      * Note that disconnect occurs automatically when the sink is
-      * destroyed, but not when its top_block stops.*/
       virtual void disconnect() = 0;
 
       virtual void set_qubit_bitnum(int qubit_bitnum) = 0;

@@ -33,6 +33,7 @@
 #include <boost/date_time.hpp>
 #include <limits>
 
+
 namespace gr {
   namespace quantum {
 
@@ -119,6 +120,15 @@ namespace gr {
       connect(gate_IQ_mixer, 0, self(), 0);
       connect(ctrl_IQ_mixer, 0, self(), 1);
       connect(readout_IQ_mixer, 0, self(), 2);
+
+
+      size_t file_byte_size = 64;
+      const char* file_path = "";
+      source_file = blocks::file_source::make(file_byte_size, file_path, false, 0, 1);
+      source_file_throttle = blocks::throttle::make(file_byte_size, sample_rate());
+      connect(source_file, 0, source_file_throttle, 0);
+      source_file->open(file_path, false); // file reload
+
 
 
       message_port_register_hier_in(d_port_in);

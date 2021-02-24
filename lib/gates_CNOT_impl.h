@@ -23,7 +23,7 @@
 #ifndef INCLUDED_GR_QUANTUM_GATES_CNOT_IMPL_H
 #define INCLUDED_GR_QUANTUM_GATES_CNOT_IMPL_H
 
-#include <gate.h>
+#include "gate.h"
 #include <quantum/gates_CNOT.h>
 #include <gnuradio/logger.h>
 
@@ -43,14 +43,17 @@ namespace gr {
       gr::logger_ptr d_debug_logger;
 
     public:
-      gates_CNOT_impl(bool DC_mode,
+      gates_CNOT_impl(std::string wave_type,
+                   bool DC_mode,
                    double frequency,
                    double I_amplitude,
                    double Q_amplitude,
                    double I_bandwidth,
                    double Q_bandwidth,
                    double processing_time,
-                   double samples_per_sec);
+                   double samples_per_sec,
+                   const char* wave_file_path,
+                   std::string wave_file_type);
       ~gates_CNOT_impl();
 
       // Overloading gr::block::start to reset timer

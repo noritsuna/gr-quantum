@@ -34,32 +34,40 @@ namespace gr {
   namespace quantum {
 
     gates_H::sptr
-    gates_H::make(double frequency,
+    gates_H::make(std::string wave_type,
+                  double frequency,
                   double I_amplitude,
                   double Q_amplitude,
                   double I_bandwidth,
                   double Q_bandwidth,
                   double processing_time,
-                  double samples_per_sec)
-
+                  double samples_per_sec,
+                  const char* wave_file_path,
+                  std::string wave_file_type)
     {
       return gnuradio::get_initial_sptr
-        (new gates_H_impl(frequency,
+        (new gates_H_impl(wave_type,
+                          frequency,
                           I_amplitude,
                           Q_amplitude,
                           I_bandwidth,
                           Q_bandwidth,
                           processing_time,
-                          samples_per_sec));
+                          samples_per_sec,
+                          wave_file_path,
+                          wave_file_type));
     }
 
-    gates_H_impl::gates_H_impl(  double frequency,
+    gates_H_impl::gates_H_impl(  std::string wave_type,
+                                 double frequency,
                                  double I_amplitude,
                                  double Q_amplitude,
                                  double I_bandwidth,
                                  double Q_bandwidth,
                                  double processing_time, 
-                                 double samples_per_second)
+                                 double samples_per_second,
+                                 const char* wave_file_path,
+                                 std::string wave_file_type)
       : block("gates_H",
                       io_signature::make(0, 0, 0),
                       io_signature::make(0, 0, 0)),
@@ -68,8 +76,18 @@ namespace gr {
     {
       configure_default_loggers(d_logger, d_debug_logger, "H Gate");
 
-      d_gate = new gate(gate::H, frequency, I_amplitude, Q_amplitude, I_bandwidth, Q_bandwidth, processing_time, samples_per_second);
-
+      switch (gate::convert_wave_type(wave_type))
+      {
+      case gate::FREQ_COMV:
+        d_gate = new gate(gate::H, frequency, I_amplitude, Q_amplitude, I_bandwidth, Q_bandwidth, processing_time, samples_per_second);
+        break;
+      case gate::ARRAY:
+        d_gate = new gate(gate::H, wave_file_path, gate::convert_wave_file_type(wave_file_type), samples_per_second);
+        break;
+      default:
+        d_gate = new gate(gate::H, frequency, I_amplitude, Q_amplitude, I_bandwidth, Q_bandwidth, processing_time, samples_per_second);
+        break;
+      }
 
       message_port_register_out(d_port_out);
       message_port_register_in(d_port_in);

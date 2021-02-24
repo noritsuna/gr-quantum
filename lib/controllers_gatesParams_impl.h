@@ -39,6 +39,7 @@ namespace gr {
       const pmt::pmt_t d_port_in;
       
       double d_qubit_id;
+      gate::wave_type_t d_wave_type;
       gate *INIT;
       gate *RO;
       gate *X_gate;
@@ -58,7 +59,7 @@ namespace gr {
       gr::logger_ptr d_debug_logger;
 
     public:
-      controllers_gatesParams_impl(double qubit_id);
+      controllers_gatesParams_impl(double qubit_id, std::string wave_type);
       ~controllers_gatesParams_impl();
 
       // Overloading gr::block::start to reset timer
@@ -66,18 +67,20 @@ namespace gr {
 
       void set_qubit_id(double qubit_id);
       double qubit_id();
+      void set_wave_type(std::string wave_type);
+      gate::wave_type_t wave_type();
 
-      void set_INIT_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec);
-      void set_RO_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec);
+      void set_INIT_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec, const char* wave_file_path, std::string wave_file_type);
+      void set_RO_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec, const char* wave_file_path, std::string wave_file_type);
 
-      void set_X_gate_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec);
-      void set_Y_gate_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec);
-      void set_Z_gate_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec);
-      void set_H_gate_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec);
-      void set_T_gate_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec);
-      void set_S_gate_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec);
-      void set_CNOT_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec, bool ctrl_dc_mode);
-      void set_JUNC_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec, bool ctrl_dc_mode);
+      void set_X_gate_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec, const char* wave_file_path, std::string wave_file_type);
+      void set_Y_gate_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec, const char* wave_file_path, std::string wave_file_type);
+      void set_Z_gate_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec, const char* wave_file_path, std::string wave_file_type);
+      void set_H_gate_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec, const char* wave_file_path, std::string wave_file_type);
+      void set_T_gate_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec, const char* wave_file_path, std::string wave_file_type);
+      void set_S_gate_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec, const char* wave_file_path, std::string wave_file_type);
+      void set_CNOT_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec, const char* wave_file_path, std::string wave_file_type, bool ctrl_dc_mode);
+      void set_JUNC_parameters(double frequency, double I_amplitude, double Q_amplitude, double I_bandwidth, double Q_bandwidth, double processing_time, double samples_per_sec, const char* wave_file_path, std::string wave_file_type, bool ctrl_dc_mode);
 
       void handle_cmd_msg(pmt::pmt_t msg);
     };

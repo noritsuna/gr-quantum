@@ -30,6 +30,7 @@
 #include "quantum/gates_X.h"
 #include "quantum/gates_Y.h"
 #include "quantum/gates_Z.h"
+#include "quantum/gates_waveform.h"
 #include "quantum/measurements_Detector.h"
 #include "quantum/API_OpenQL_Source.h"
 #include "quantum/API_OpenQL_Sink.h"
@@ -69,6 +70,8 @@ GR_SWIG_BLOCK_MAGIC2(quantum, gates_X);
 GR_SWIG_BLOCK_MAGIC2(quantum, gates_Y);
 %include "quantum/gates_Z.h"
 GR_SWIG_BLOCK_MAGIC2(quantum, gates_Z);
+%include "quantum/gates_waveform.h"
+GR_SWIG_BLOCK_MAGIC2(quantum, gates_waveform);
 %include "quantum/measurements_Detector.h"
 GR_SWIG_BLOCK_MAGIC2(quantum, measurements_Detector);
 %include "quantum/API_OpenQL_Source.h"

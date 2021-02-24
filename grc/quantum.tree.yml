@@ -20,6 +20,7 @@
   - quantum_gates_T
   - quantum_gates_CNOT
   - quantum_gates_junction
+  - quantum_gates_waveform
 - Measurements:
   - quantum_measurements_Detector
   - quantum_measurements_QuTiP_Wave2Qobj

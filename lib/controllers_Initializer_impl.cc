@@ -36,6 +36,7 @@ namespace gr {
     controllers_Initializer::sptr
     controllers_Initializer::make(
                   double qubit_id,
+                  std::string wave_type,
                   double frequency,
                   double I_amplitude,
                   double Q_amplitude,
@@ -43,12 +44,14 @@ namespace gr {
                   double Q_bandwidth,
                   double processing_time,
                   double samples_per_sec,
+                  const char* wave_file_path,
+                  std::string wave_file_type,
                   bool isFeedbackMode)
-
     {
       return gnuradio::get_initial_sptr
         (new controllers_Initializer_impl(
                           qubit_id,
+                          wave_type,
                           frequency,
                           I_amplitude,
                           Q_amplitude,
@@ -56,11 +59,14 @@ namespace gr {
                           Q_bandwidth,
                           processing_time,
                           samples_per_sec,
+                          wave_file_path,
+                          wave_file_type,
                           isFeedbackMode));
     }
 
     controllers_Initializer_impl::controllers_Initializer_impl(
                                  double qubit_id,
+                                 std::string wave_type,
                                  double frequency,
                                  double I_amplitude,
                                  double Q_amplitude,
@@ -68,6 +74,8 @@ namespace gr {
                                  double Q_bandwidth,
                                  double processing_time, 
                                  double samples_per_second,
+                                 const char* wave_file_path,
+                                 std::string wave_file_type,
                                  bool isFeedbackMode)
       : block("controllers_Initializer",
                       io_signature::make(0, 0, 0),
@@ -82,6 +90,18 @@ namespace gr {
       set_qubit_id(qubit_id);
 
       INIT = new gate(gate::INIT, frequency, I_amplitude, Q_amplitude, I_bandwidth, Q_bandwidth, processing_time, samples_per_second, qubit_id);
+      switch (gate::convert_wave_type(wave_type))
+      {
+      case gate::FREQ_COMV:
+        INIT = new gate(gate::INIT, frequency, I_amplitude, Q_amplitude, I_bandwidth, Q_bandwidth, processing_time, samples_per_second, qubit_id);
+        break;
+      case gate::ARRAY:
+        INIT = new gate(gate::INIT, wave_file_path, gate::convert_wave_file_type(wave_file_type), samples_per_second, qubit_id);
+        break;
+      default:
+        INIT = new gate(gate::INIT, frequency, I_amplitude, Q_amplitude, I_bandwidth, Q_bandwidth, processing_time, samples_per_second, qubit_id);
+        break;
+      }
 
       message_port_register_out(d_port_out);
       message_port_register_in(d_port_in);
